@@ -87,7 +87,7 @@ class Helper {
     return headers;
   }
   static const platform = MethodChannel('my_flutter_app/channel');
-  Future<void> openBrowser(String webURl) async {
+  static Future<void> openBrowser(String webURl) async {
     if (Platform.isIOS) {
       try {
         await platform.invokeMethod('openExternalBrowser', {'url': webURl});
@@ -96,9 +96,8 @@ class Helper {
         print("Error: ${e.message}");
       }
     } else {
-      var url = Uri.parse(webURl);
-      if (await canLaunchUrl(url)) {
-        await launchUrl(Uri.parse(webURl), mode: LaunchMode.externalApplication);
+      if (await canLaunchUrlString(webURl)) {
+        await launchUrlString(webURl, mode: LaunchMode.externalApplication);
       } else {
         throw 'Could not launch $webURl';
       }

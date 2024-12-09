@@ -259,7 +259,7 @@ class _AccountBottomSheetState extends StateX<AccountBottomSheet> {
                                       PreferenceManager.getPrivacyPolicyUrl();
                                   if (terms != null) {
                                     //_launchInWebView(terms);
-                                    openBrowser(terms);
+                                    Helper.openBrowser(terms);
                                   }
                                 },
                                 child: Text("Privacy Policies",
@@ -276,7 +276,7 @@ class _AccountBottomSheetState extends StateX<AccountBottomSheet> {
                                       PreferenceManager.getSupportUrl();
                                   if (supportUrl != null) {
                                     //_launchInWebView(supportUrl);
-                                    openBrowser(supportUrl);
+                                    Helper.openBrowser(supportUrl);
                                   }
                                 },
                                 child: Text("Support",
@@ -293,7 +293,7 @@ class _AccountBottomSheetState extends StateX<AccountBottomSheet> {
                                       PreferenceManager.getFAQUrl();
                                   if (supportUrl != null) {
                                     //_launchInWebView(supportUrl);
-                                    openBrowser(supportUrl);
+                                    Helper.openBrowser(supportUrl);
                                   }
                                 },
                                 child: Text("FAQ",
@@ -309,7 +309,7 @@ class _AccountBottomSheetState extends StateX<AccountBottomSheet> {
                                   var tncUrl = PreferenceManager.getTnCUrl();
                                   if (tncUrl != null) {
                                     //_launchInWebView(tncUrl);
-                                    openBrowser(tncUrl);
+                                    Helper.openBrowser(tncUrl);
                                   }
                                 },
                                 child: Text("Term & Condition",
@@ -437,28 +437,4 @@ class _AccountBottomSheetState extends StateX<AccountBottomSheet> {
       ],
     );
   }
-
-  Future<void> _launchInWebView(String Urls) async {
-    //  print('Urls===========>$Urls');
-    var url = Uri.parse(Urls);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      await launchUrl(url);
-    }
-  }
-  MethodChannel platform = MethodChannel('my_flutter_app/channel');
-  Future<void> openBrowser(String webURl) async {
-    if (Platform.isIOS) {
-      try {
-        await platform.invokeMethod('openExternalBrowser', {'url': webURl});
-        print("Browser opened successfully");
-      } on PlatformException catch (e) {
-        print("Error: ${e.message}");
-      }
-    } else {
-      _launchInWebView(webURl);
-    }
-  }
-
 }
