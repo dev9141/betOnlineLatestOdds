@@ -337,64 +337,6 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                 ),
                                 backgroundColor: AppColors.blue,
                               ),
-                              SizedBox(height: 8),
-                              PrimaryButton(
-                                btnColor: AppColors.blue,
-                                /*btnColor: isEnableBtn
-                                    ? AppColors.lightBlue
-                                    : AppColors.grayColor,*/
-                                Text(_internetTwoController.text,
-                                    style: TextStyle(
-                                        fontSize: 20, color: AppColors.white)),
-                                () {
-                                  Helper.hideKeyBoard(context);
-                                  Helper.isInternetAvailable()
-                                      .then((internet) async {
-                                    if (internet) {
-                                      setState(() {
-                                        _internetTwoController.text = "2 internet available";
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _internetTwoController.text = "2 internet not available";
-                                      });
-                                    }
-                                  });
-                                },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                backgroundColor: AppColors.blue,
-                              ),
-                              SizedBox(height: 8),
-                              PrimaryButton(
-                                btnColor: AppColors.blue,
-                                /*btnColor: isEnableBtn
-                                    ? AppColors.lightBlue
-                                    : AppColors.grayColor,*/
-                                Text(_internetThreeController.text,
-                                    style: TextStyle(
-                                        fontSize: 20, color: AppColors.white)),
-                                () {
-                                  Helper.hideKeyBoard(context);
-                                  Helper.isInternetConnectionAvailable()
-                                      .then((internet) async {
-                                    if (internet) {
-                                      setState(() {
-                                        _internetThreeController.text = "3 internet available";
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _internetThreeController.text = "3 internet not available";
-                                      });
-                                    }
-                                  });
-                                },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                backgroundColor: AppColors.blue,
-                              ),
                               SizedBox(height: 20),
                               GestureDetector(
                                 child: Text(

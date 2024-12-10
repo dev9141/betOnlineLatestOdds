@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:betus/data/entity/configuration_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewWithJsInjection extends StatefulWidget {
@@ -80,10 +81,26 @@ class _WebViewWithJsInjectionState extends StateX<WebViewWithJsInjection> {
             }
           },
           onNavigationRequest: (NavigationRequest request) async {
-            if (_jsScripts.containsKey('NAVIGATION_STATE_CHANGE')) {
+            print("webviewurl request: ${request.url}");
+            print("webviewurl: ${widget.url}");
+            if (request.url.contains(widget.url)) {
+              // Allow navigation within the WebView
+              return NavigationDecision.navigate;
+            }
+            else {
+              // Open in external browser
+              if (await canLaunchUrl(Uri.parse(request.url))) {
+                await launchUrl(Uri.parse(request.url), mode: LaunchMode.externalApplication);
+              }
+              else{
+                await launchUrl(Uri.parse(request.url), mode: LaunchMode.externalApplication);
+              }
+              return NavigationDecision.prevent;
+            }
+            /*if (_jsScripts.containsKey('NAVIGATION_STATE_CHANGE')) {
               await _injectJavaScriptList(_jsScripts['NAVIGATION_STATE_CHANGE']!);
             }
-            return NavigationDecision.navigate;
+            return NavigationDecision.navigate;*/
           },
         ),
       )
