@@ -96,11 +96,17 @@ class Helper {
         print("Error: ${e.message}");
       }
     } else {
-      if (await canLaunchUrlString(webURl)) {
-        await launchUrlString(webURl, mode: LaunchMode.externalApplication);
-      } else {
-        throw 'Could not launch $webURl';
-      }
+      _launchInWebView(webURl);
+    }
+  }
+
+  static Future<void> _launchInWebView(String Urls) async {
+    //  print('Urls===========>$Urls');
+    var url = Uri.parse(Urls);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      await launchUrl(url);
     }
   }
 

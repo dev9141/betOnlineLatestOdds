@@ -343,35 +343,6 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                 /*btnColor: isEnableBtn
                                     ? AppColors.lightBlue
                                     : AppColors.grayColor,*/
-                                Text(_internetOneController.text,
-                                    style: TextStyle(
-                                        fontSize: 20, color: AppColors.white)),
-                                () {
-                                  Helper.hideKeyBoard(context);
-                                  Helper.isInternetConnectionAvailableOne()
-                                      .then((internet) async {
-                                    if (internet) {
-                                      setState(() {
-                                        _internetOneController.text = "1 internet available";
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _internetOneController.text = "1 internet not available";
-                                      });
-                                    }
-                                  });
-                                },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                backgroundColor: AppColors.blue,
-                              ),
-                              SizedBox(height: 8),
-                              PrimaryButton(
-                                btnColor: AppColors.blue,
-                                /*btnColor: isEnableBtn
-                                    ? AppColors.lightBlue
-                                    : AppColors.grayColor,*/
                                 Text(_internetTwoController.text,
                                     style: TextStyle(
                                         fontSize: 20, color: AppColors.white)),
