@@ -60,6 +60,7 @@ class _LoginScreenState extends StateX<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    callConfigurationAPI();
     _internetOneController.text = "Internet check one";
     _internetTwoController.text = "Internet check two";
     _internetThreeController.text = "Internet check three";

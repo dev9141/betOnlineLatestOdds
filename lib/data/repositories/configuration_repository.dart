@@ -150,7 +150,7 @@ class ConfigurationRepository {
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);
-        ConfigurationEntity configurationEntity = ConfigurationEntity.fromJson(objJsonObject);
+        PubConfigurationEntity configurationEntity = PubConfigurationEntity.fromJson(objJsonObject);
         PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.style.privacyPolicyUrl);
         PreferenceManager.setSupportUrl(configurationEntity.data.style.supportUrl);
         PreferenceManager.setFAQUrl(configurationEntity.data.style.faqUrl);

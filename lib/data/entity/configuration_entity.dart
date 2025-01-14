@@ -26,6 +26,27 @@ class ConfigurationEntity {
 	}
 }
 
+class PubConfigurationEntity {
+	late ConfigurationData data;
+
+	PubConfigurationEntity({
+		required this.data,
+	});
+
+	factory PubConfigurationEntity.fromJson(Map<String, dynamic> json) => PubConfigurationEntity(
+		data: ConfigurationData.fromJson(json["data"]),
+	);
+
+	Map<String, dynamic> toJson() => {
+		"data": data.toJson(),
+	};
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
 class ConfigurationData {
 	String webviewUrl = "";
 	String includeUrl = "";
