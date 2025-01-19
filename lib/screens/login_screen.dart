@@ -134,9 +134,9 @@ class _LoginScreenState extends StateX<LoginScreen> {
                           child: Image.asset(AppAssets.icLogo,
                               height: 60), // Placeholder for logo
                         ),
-
                         // Email & Password Fields
                         Container(
+                          margin: const EdgeInsets.all(8.0),
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(

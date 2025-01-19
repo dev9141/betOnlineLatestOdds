@@ -9,6 +9,7 @@ class AppStrings {
   static const String sign_up = 'Sign Up';
   static const String needToLogin = 'Need to Login?';
   static const String loginButton = 'Login';
+  static const String logoutButton = 'Logout';
   static const String log_in = 'Log In';
   static const String successMessage = 'Registered successfully!';
   static const String errorMessage = 'Failed to register';
@@ -24,9 +25,21 @@ class AppStrings {
   static const String forgot_password = 'Forgot Password?';
   static const String dont_have_account = 'Don\'t have an account yet?';
 
+  //Account
+  static const String support_privacy = 'Support & Policies';
+  static const String FAQ = 'FAQ';
+  static const String support = 'Support';
+  static const String privacy_policies = 'Privacy Policies';
+  static const String term_and_condition = 'Term & Condition';
+
   //register
   static const String already_have_account = 'Already have an account?';
   static const String firstNameRequired = 'User name is required.';
   static const String enter_first_name = 'Enter your first name';
+
+  static const String createAccount = 'Create Account';
+
+  static const String phone_number = 'Phone Number';
+  static const String phone_hint = '123-456-7980';
 
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bet_online_latest_odds/assets/app_colors.dart';
 import 'package:bet_online_latest_odds/controller/ConfigurationController.dart';
 import 'package:bet_online_latest_odds/data/entity/configuration_entity.dart';
+import 'package:bet_online_latest_odds/screens/account_screen.dart';
 import 'package:bet_online_latest_odds/screens/bottom_sheets/account_bottom_sheet.dart';
 import 'package:bet_online_latest_odds/screens/bottom_sheets/logout_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,25 +39,9 @@ class _HomeScreenState extends StateX<HomeScreen> {
   User user = User();
   late UserController userController;
 
-  // List of tabs for the bottom navigation bar
-  /*final List<Widget> _pages = [
-    Center(child: Text("WebView Screen", style: TextStyle(fontSize: 24, color: AppColors.white))),
-    Center(child: Text("Menu Bottom sheet", style: TextStyle(fontSize: 24, color: AppColors.white))),
-    Center(child: Text("Account screen", style: TextStyle(fontSize: 24, color: AppColors.white))),
-  ];*/
   _HomeScreenState() : super(controller: UserController()) {
-    // Acquire a reference to the passed Controller.
     userController = controller as UserController;
   }
-
-  final List<Widget> _pages = [HubScreen(), Placeholder(), Placeholder()];
-
-  void _toggleFAB() {
-    setState(() {
-      _isFABOpen = !_isFABOpen;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -107,223 +92,38 @@ class _HomeScreenState extends StateX<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NFL'),
         backgroundColor: Colors.black,
+        elevation: 0,
+        automaticallyImplyLeading: false,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Icon(Icons.notifications),
+            child: GestureDetector(
+              onTap: () {
+                // Navigate to AccountScreen when the user icon is tapped
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AccountScreen()),
+                );
+              },
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.red, // Red background for the icon
+                child: Icon(
+                  Icons.person, // Person icon inside the circle
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ),
           )
         ],
       ),
       body: Stack(
         children: [
-          _pages[_currentIndex],
-          if (_isFABOpen) ...[
-            // Overlay for FAB options
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: _toggleFAB,
-                child: Container(color: Colors.black54),
-              ),
-            ),
-            Positioned(
-              bottom: 100,
-              right: 16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _buildFABOption(Icons.logout, "Logout", Colors.blue),
-                  _buildFABOption(Icons.delete, "Delete Account", Colors.blue),
-                  _buildFABOption(Icons.person, "Profile", Colors.red),
-                  _buildFABOption(
-                      Icons.close, "Close", Colors.blue, _toggleFAB),
-                ],
-              ),
-            ),
-          ],
-        ],
-      ),
-/*      floatingActionButton: SpeedDial(
-        //Speed dial menu
-        marginBottom: 10,
-        //margin bottom
-        icon: Icons.menu,
-        //icon on Floating action button
-        activeIcon: Icons.close,
-        //icon when menu is expanded on button
-        backgroundColor: Colors.deepOrangeAccent,
-        //background color of button
-        foregroundColor: Colors.white,
-        //font color, icon color in button
-        activeBackgroundColor: Colors.deepPurpleAccent,
-        //background color when menu is expanded
-        activeForegroundColor: Colors.white,
-        buttonSize: 56.0,
-        //button size
-        visible: true,
-        closeManually: false,
-        curve: Curves.bounceIn,
-        overlayColor: Colors.black,
-        overlayOpacity: 0.5,
-        onOpen: () => print('OPENING DIAL'),
-        // action when menu opens
-        onClose: () => print('DIAL CLOSED'),
-        //action when menu closes
-
-        elevation: 8.0,
-        //shadow elevation of button
-        shape: CircleBorder(),
-        //shape of button
-
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.person, color: AppColors.white),
-            foregroundColor: AppColors.white,
-            backgroundColor: AppColors.carrot,
-            label: 'Not Verified, Click to Verify',
-            labelStyle: TextStyle(fontSize: 14.0),
-            onTap: () => print('THIRD CHILD'),
-            onLongPress: () => print('THIRD CHILD LONG PRESS'),
-            shape: CircleBorder(),
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.delete, color: AppColors.white),
-            backgroundColor: AppColors.darkBlue,
-            foregroundColor: AppColors.white,
-            label: 'Delete Account',
-            labelStyle: TextStyle(fontSize: 14.0),
-            onTap: () => _openDeleteAccountBottomSheet(context),
-            onLongPress: () => print('SECOND CHILD LONG PRESS'),
-            shape: CircleBorder(),
-          ),
-          SpeedDialChild(
-            //speed dial child
-            child: Icon(Icons.exit_to_app, color: AppColors.white),
-            backgroundColor: AppColors.darkBlue,
-            foregroundColor: AppColors.white,
-            label: 'Logout',
-            labelStyle: TextStyle(fontSize: 14.0),
-            onTap: () => _openLogoutBottomSheet(context),
-            onLongPress: () => print('FIRST CHILD LONG PRESS'),
-            shape: CircleBorder(),
-          ),
-          //add more menu item childs here
-        ],
-      ),*/
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.bottomNavBg,
-        selectedItemColor: AppColors.darkBlue,
-        unselectedItemColor: AppColors.white,
-        selectedLabelStyle: const TextStyle(color: AppColors.white),
-        unselectedLabelStyle: const TextStyle(color: AppColors.white),
-        currentIndex: _currentIndex,
-        onTap: (index) {
-/*          setState(() {
-            _currentIndex = index;
-          });*/
-          /*if (index == 1) {
-            _openMenuBottomSheet(context);
-          } else */
-          if (index == 1) {
-            _openAccountBottomSheet(context);
-          } else {
-            setState(() {
-              _currentIndex = index;
-            });
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Hub"),
-          /*BottomNavigationBarItem(
-              icon: Icon(Icons.menu, color: AppColors.white), label: "Menu"),*/
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined), label: "Account"),
+          HubScreen()
         ],
       ),
     );
-  }
-
-  Widget _buildFABOption(IconData icon, String label, Color color,
-      [VoidCallback? onTap]) {
-    return GestureDetector(
-      onTap: onTap ?? () => print(label),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: Colors.white),
-            const SizedBox(width: 8),
-            Text(label, style: const TextStyle(color: Colors.white)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _openMenuBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return MenuBottomSheet();
-      },
-    ).then((_) {
-      setState(() {
-        _currentIndex = 0; // Return to Hub when the sheet is closed
-      });
-    });
-  }
-
-  void _openLogoutBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return LogoutBottomSheet();
-      },
-    ).then((_) {
-      setState(() {
-        _currentIndex = 0; // Return to Hub when the sheet is closed
-      });
-    });
-  }
-
-  void _openDeleteAccountBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return DeleteAccountBottomSheet();
-      },
-    ).then((_) {
-      setState(() {
-        _currentIndex = 0; // Return to Hub when the sheet is closed
-      });
-    });
-  }
-
-  void _openAccountBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusDirectional.only(
-          topEnd: Radius.circular(25),
-          topStart: Radius.circular(25),
-        ),
-      ),
-      builder: (context) {
-        return AccountBottomSheet();
-      },
-    ).then((_) {
-      setState(() {
-        _currentIndex = 0; // Return to Hub when the sheet is closed
-      });
-    });
   }
 }

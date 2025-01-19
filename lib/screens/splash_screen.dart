@@ -62,29 +62,9 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // BET ONLINE text
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "BET",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 36,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                      TextSpan(
-                        text: "ONLINE",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 36,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                    ],
-                  ),
+                Image.asset(
+                  AppAssets.icLogo, // Replace with your logo asset
+                  height: 100,
                 ),
                 const SizedBox(height: 8), // Space between texts
                 // LATEST ODDS text

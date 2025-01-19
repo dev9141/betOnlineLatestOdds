@@ -97,6 +97,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                         SizedBox(height: 20),
                         // Email & Password Fields
                         Container(
+                          margin: const EdgeInsets.all(8.0),
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
@@ -161,7 +162,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              SizedBox(height: 25),
+                              SizedBox(height: 12),
                               Container(
                                 child: Text(
                                   AppStrings.email,
@@ -207,7 +208,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 12),
                               Container(
                                 child: Text(
                                   AppStrings.password,
@@ -272,7 +273,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 12),
                               Container(
                                 child: Text(
                                   AppStrings.userName,
@@ -322,14 +323,64 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              SizedBox(height: 25),
+                              SizedBox(height: 12,),
+                              Container(
+                                child: Text(
+                                  AppStrings.phone_number,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: AppColors.textTitle,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 50,
+                                child: CommonTextField(
+                                  commonController: _userNameController,
+                                  textInputType: TextInputType.phone,
+                                  hintText: AppStrings.phone_hint,
+                                  decoration: InputDecoration(
+                                    hintText: 'Create a User Name',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.hintColor,
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColors.white,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 16,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (userNameError != null)
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                    top: 4,
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    userNameError ?? '',
+                                    style: AppTheme.errorTextTheme,
+                                  ),
+                                ),
+                              SizedBox(height: 12),
                               // Register Button
                               PrimaryButton(
                                 btnColor: AppColors.red,
                                 /*btnColor: isEnableBtn
                                     ? AppColors.lightBlue
                                     : AppColors.grayColor,*/
-                                Text('Register',
+                                Text(AppStrings.createAccount,
                                     style: TextStyle(
                                         fontSize: 20, color: AppColors.white)),
                                 () {
