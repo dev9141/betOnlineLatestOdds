@@ -6,7 +6,7 @@ class Assets {
   static const String imagesBgTexture = 'assets/images/bg_texture.png';
   static const String imagesDefaultProfileImage = 'assets/images/default_profile_image.png';
   static const String imagesEmailSend = 'assets/images/email_send.png';
-  static const String imagesIcLogo = 'assets/images/ic_logo.svg';
+  static const String imagesIcLogo = 'assets/images/ic_logo.png';
   static const String imagesLogo = 'assets/images/logo.png';
 
 }
