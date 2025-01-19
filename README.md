@@ -1,4 +1,4 @@
-# betus
+# bet_online_latest_odds
 
 A new Flutter project.
 

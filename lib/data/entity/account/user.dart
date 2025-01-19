@@ -12,6 +12,7 @@ class User {
   String emailVerifiedAt = "";
   bool isEmailVerified = false;
   String username = "";
+  String firstName = "";
   String type = "";
   String emailVerificationSentAt = "";
   String wallet = "";

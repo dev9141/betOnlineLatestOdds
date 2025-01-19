@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:betus/assets/app_colors.dart';
-import 'package:betus/controller/ConfigurationController.dart';
-import 'package:betus/data/entity/configuration_entity.dart';
-import 'package:betus/screens/bottom_sheets/account_bottom_sheet.dart';
-import 'package:betus/screens/bottom_sheets/logout_bottom_sheet.dart';
+import 'package:bet_online_latest_odds/assets/app_colors.dart';
+import 'package:bet_online_latest_odds/controller/ConfigurationController.dart';
+import 'package:bet_online_latest_odds/data/entity/configuration_entity.dart';
+import 'package:bet_online_latest_odds/screens/bottom_sheets/account_bottom_sheet.dart';
+import 'package:bet_online_latest_odds/screens/bottom_sheets/logout_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

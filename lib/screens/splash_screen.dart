@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:betus/assets/app_assets.dart';
-import 'package:betus/data/local/preference_manager.dart';
-import 'package:betus/data/repositories/user_repository.dart';
-import 'package:betus/screens/login_screen.dart';
-import 'package:betus/utils/constants/screen.dart';
+import 'package:bet_online_latest_odds/assets/app_assets.dart';
+import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
+import 'package:bet_online_latest_odds/data/repositories/user_repository.dart';
+import 'package:bet_online_latest_odds/screens/login_screen.dart';
+import 'package:bet_online_latest_odds/utils/constants/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,12 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () async {
       // Replace with your logic to check if user is logged in
       bool isLoggedIn = false; // Change this based on actual login state
-      //PreferenceManager.setIsUserLoggedIn(false);
+      PreferenceManager.setIsUserLoggedIn(false);
       if (PreferenceManager.getIsUserLoggedIn()) {
-        /*Fluttertoast.showToast(
-            msg: await UserRepository().getAccessToken(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);*/
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -50,24 +46,58 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        fit: StackFit.expand,
         children: [
           // Background image
-          Image.asset(
-            AppAssets.imgSplashBackground, // Replace with your image asset
-            fit: BoxFit.cover,
-          ),
-          // App logo
-          DecoratedBox(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(AppAssets.imgBackgroundTexture),
-                    fit: BoxFit.cover)),
-            child: Center(
-              child: SvgPicture.asset(
-                AppAssets.icLogo, // Replace with your logo asset
-                height: 100,
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppAssets.imgSplashBackground), // Replace with your image asset
+                fit: BoxFit.cover,
               ),
+            ),
+          ),
+          // Centered content
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // BET ONLINE text
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "BET",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "ONLINE",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8), // Space between texts
+                // LATEST ODDS text
+                Text(
+                  "LATEST ODDS",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

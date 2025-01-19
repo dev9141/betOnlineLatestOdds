@@ -1,4 +1,4 @@
-import 'package:betus/assets/app_colors.dart';
+import 'package:bet_online_latest_odds/assets/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
@@ -46,7 +46,7 @@ class _HubScreenState extends StateX<HubScreen> {
             _configurationController.isApiCall = false;
           });
           _configurationEntity = value.object as ConfigurationEntity?;
-          //_configurationEntity!.data.webviewUrl = "https://www.betus.com.pa/nba/";
+          //_configurationEntity!.data.webviewUrl = "https://www.bet_online_latest_odds.com.pa/nba/";
           _extractJavascriptData();
           print("Config Response: ${_configurationEntity!.data.toJson()}");
         } else {

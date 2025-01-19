@@ -1,8 +1,8 @@
-import 'package:betus/assets/app_assets.dart';
-import 'package:betus/screens/home_screen.dart';
-import 'package:betus/screens/login_screen.dart';
-import 'package:betus/views/custom_widgets/common_textfield.dart';
-import 'package:betus/views/custom_widgets/primary_button.dart';
+import 'package:bet_online_latest_odds/assets/app_assets.dart';
+import 'package:bet_online_latest_odds/screens/home_screen.dart';
+import 'package:bet_online_latest_odds/screens/login_screen.dart';
+import 'package:bet_online_latest_odds/views/custom_widgets/common_textfield.dart';
+import 'package:bet_online_latest_odds/views/custom_widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +19,7 @@ import '../../utils/constants/define.dart';
 import '../../utils/constants/screen.dart';
 import '../../utils/helper/alert_helper.dart';
 import '../../utils/helper/helper.dart';
+import '../assets/app_strings.dart';
 import '../assets/app_theme.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -33,11 +34,13 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
 
   bool _obscureText = true;
   String? emailError;
   String? passwordError;
   String? userNameError;
+  String? firstNameRequired;
   bool isValidation = false;
   bool isEnableBtn = false;
   bool _isLoading = false;
@@ -88,12 +91,8 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                         // Logo
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
-                          child: SvgPicture.asset(AppAssets.icLogo,
+                          child: Image.asset(AppAssets.icLogo,
                               height: 60), // Placeholder for logo
-                        ),
-                        Text(
-                          "Sign up for updates & notifications",
-                          style: TextStyle(color: AppColors.white, fontSize: 22),
                         ),
                         SizedBox(height: 20),
                         // Email & Password Fields
@@ -101,17 +100,74 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: AppColors.inputBackground,
+                            color: AppColors.box_background,
                             borderRadius: BorderRadius.circular(18),
                           ),
                           child: Column(
                             children: [
+                              Text(
+                                AppStrings.sign_up,
+                                style: TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,),
+                              ),const SizedBox(height: 20),
                               Container(
                                 child: Text(
-                                  'Email',
+                                  AppStrings.firstName,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    color: AppColors.white,
+                                    color: AppColors.textTitle,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 50,
+                                child: CommonTextField(
+                                  commonController: _firstNameController,
+                                  textInputType: TextInputType.text,
+                                  hintText: AppStrings.enter_first_name,
+                                  decoration: InputDecoration(
+                                    hintText: 'Create a User Name',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.hintColor,
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColors.white,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 16,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (firstNameRequired != null)
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                    top: 4,
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    firstNameRequired ?? '',
+                                    style: AppTheme.errorTextTheme,
+                                  ),
+                                ),
+                              SizedBox(height: 25),
+                              Container(
+                                child: Text(
+                                  AppStrings.email,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: AppColors.textTitle,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -120,7 +176,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                               const SizedBox(height: 8),
                               CommonTextField(
                                 decoration: InputDecoration(
-                                  hintText: 'Enter a valid Email',
+                                  hintText: AppStrings.emailHint,
                                   hintStyle: TextStyle(
                                     color: AppColors.hintColor,
                                   ),
@@ -154,10 +210,10 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                               const SizedBox(height: 20),
                               Container(
                                 child: Text(
-                                  'Password',
+                                  AppStrings.password,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    color: AppColors.white,
+                                    color: AppColors.textTitle,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -169,7 +225,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 child: CommonTextField(
                                   commonController: _passwordController,
                                   textInputType: TextInputType.text,
-                                  hintText: S.of(context).password,
+                                  hintText: AppStrings.passwordHint,
                                   isShowPassword: _obscureText,
                                   decoration: InputDecoration(
                                     hintText: 'Create a Password',
@@ -219,10 +275,10 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                               const SizedBox(height: 20),
                               Container(
                                 child: Text(
-                                  'User Name',
+                                  AppStrings.userName,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    color: AppColors.white,
+                                    color: AppColors.textTitle,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -310,13 +366,15 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                             Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => HomeScreen(),
+                                                  builder: (context) =>
+                                                      HomeScreen(),
                                                 ));
                                           } else {
                                             if (value is APIError) {
                                               setState(() {
                                                 _isLoading = false;
-                                                userController.isApiCall = false;
+                                                userController.isApiCall =
+                                                    false;
                                               });
                                               AlertHelper.customSnackBar(
                                                   context, value.message, true);
@@ -346,33 +404,32 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                         // Login Section
                         Container(
                           padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.bgGrayColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
                           child: Column(
                             children: [
                               Text(
-                                "Need to Login?",
-                                style: TextStyle(color: AppColors.white, fontSize: 18),
+                                AppStrings.already_have_account,
+                                style: TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 10),
-                              PrimaryButton(
-                                Text(S.of(context).login,
+                              GestureDetector(
+                                child: Text(AppStrings.log_in,
                                     style: TextStyle(
-                                        fontSize: 20, color: AppColors.white)),
-                                () {
+                                        color: AppColors.theme_carrot,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w800)),
+                                onTap: (){
                                   Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                                        (Route<dynamic> route) => false, // Removes all routes
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                        (Route<dynamic> route) =>
+                                    false, // Removes all routes
                                   );
                                 },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                backgroundColor: AppColors.blue,
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -402,6 +459,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       emailError = null;
       passwordError = null;
       userNameError = null;
+      firstNameRequired = null;
       isValidation = false;
     });
 
@@ -461,6 +519,19 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
         isValidation = false;
       });
     }
+
+    if (_firstNameController.text.trim().isEmpty) {
+      setState(() {
+        firstNameRequired = AppStrings.firstNameRequired;
+        isValidation = false;
+      });
+    } else if (_firstNameController.text.trim().length < FIRST_NAME_LENGTH_MIN) {
+      setState(() {
+        firstNameRequired =
+            S.of(context).err_user_name_min_length(FIRST_NAME_LENGTH_MIN);
+        isValidation = false;
+      });
+    }
   }
 
   void setData() {
@@ -468,6 +539,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       user.email = _emailController.text.toString().trim();
       user.password = _passwordController.text.toString().trim();
       user.username = _userNameController.text.toString().trim();
+      user.firstName = _firstNameController.text.toString().trim();
     });
   }
 }

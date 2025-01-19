@@ -1,5 +1,5 @@
-import 'package:betus/assets/app_colors.dart';
-import 'package:betus/screens/password_email_send.dart';
+import 'package:bet_online_latest_odds/assets/app_colors.dart';
+import 'package:bet_online_latest_odds/screens/password_email_send.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

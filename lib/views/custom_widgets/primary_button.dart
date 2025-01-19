@@ -17,7 +17,7 @@ class PrimaryButton extends StatelessWidget {
         this.isEnable=true,
         this.icon = '',
         this.alignment = Alignment.centerLeft,
-        this.btnColor = AppColors.blue,
+        this.btnColor = AppColors.theme_carrot,
         this.backgroundColor = AppColors.white,
         super.key,
         this.shape

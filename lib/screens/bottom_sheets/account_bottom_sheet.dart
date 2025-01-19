@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:betus/assets/app_assets.dart';
-import 'package:betus/data/local/preference_manager.dart';
-import 'package:betus/screens/login_screen.dart';
+import 'package:bet_online_latest_odds/assets/app_assets.dart';
+import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
+import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

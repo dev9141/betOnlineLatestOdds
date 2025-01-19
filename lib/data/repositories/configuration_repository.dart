@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:betus/data/entity/configuration_entity.dart';
+import 'package:bet_online_latest_odds/data/entity/configuration_entity.dart';
 import 'package:http/http.dart' as http;
 import '../../generated/l10n.dart';
 import '../../utils/helper/app_url.dart';

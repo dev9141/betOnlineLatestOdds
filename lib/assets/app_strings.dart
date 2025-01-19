@@ -1,13 +1,32 @@
 // Define constant strings here
 class AppStrings {
   static const String appTitle = 'Registration Screen';
+  static const String splashSubTitle = 'LATEST ODDS';
   static const String signUpTitle = 'Sign up for updates & notifications';
-  static const String emailHint = 'Enter a valid Email';
-  static const String passwordHint = 'Create a Password';
+  static const String passwordHint = 'Enter a Password';
   static const String registerButton = 'Register';
+  static const String emailHint = 'Enter a valid Email';
+  static const String sign_up = 'Sign Up';
   static const String needToLogin = 'Need to Login?';
   static const String loginButton = 'Login';
+  static const String log_in = 'Log In';
   static const String successMessage = 'Registered successfully!';
   static const String errorMessage = 'Failed to register';
   static const String emptyFieldsError = 'Please enter both email and password';
+  static const String userName = 'User Name';
+  static const String firstName = 'First Name';
+
+  //Login field text
+  static const String email = 'Email';
+  static const String password = 'Password';
+  static const String enter_email = 'Enter Your Email';
+  static const String enter_password = 'Enter Your Password';
+  static const String forgot_password = 'Forgot Password?';
+  static const String dont_have_account = 'Don\'t have an account yet?';
+
+  //register
+  static const String already_have_account = 'Already have an account?';
+  static const String firstNameRequired = 'User name is required.';
+  static const String enter_first_name = 'Enter your first name';
+
 }

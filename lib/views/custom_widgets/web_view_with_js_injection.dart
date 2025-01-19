@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:betus/data/entity/configuration_entity.dart';
+import 'package:bet_online_latest_odds/data/entity/configuration_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:url_launcher/url_launcher.dart';

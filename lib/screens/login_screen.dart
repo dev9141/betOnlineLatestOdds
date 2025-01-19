@@ -1,9 +1,10 @@
-import 'package:betus/assets/app_theme.dart';
-import 'package:betus/controller/ConfigurationController.dart';
-import 'package:betus/data/entity/account/user.dart';
-import 'package:betus/data/local/preference_manager.dart';
-import 'package:betus/screens/password_email_send.dart';
-import 'package:betus/screens/registration_screen.dart';
+import 'package:bet_online_latest_odds/assets/app_strings.dart';
+import 'package:bet_online_latest_odds/assets/app_theme.dart';
+import 'package:bet_online_latest_odds/controller/ConfigurationController.dart';
+import 'package:bet_online_latest_odds/data/entity/account/user.dart';
+import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
+import 'package:bet_online_latest_odds/screens/password_email_send.dart';
+import 'package:bet_online_latest_odds/screens/registration_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,7 +38,8 @@ class _LoginScreenState extends StateX<LoginScreen> {
   User user = User();
   final TextEditingController _internetOneController = TextEditingController();
   final TextEditingController _internetTwoController = TextEditingController();
-  final TextEditingController _internetThreeController = TextEditingController();
+  final TextEditingController _internetThreeController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -129,54 +131,62 @@ class _LoginScreenState extends StateX<LoginScreen> {
                         // Logo
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
-                          child: SvgPicture.asset(AppAssets.icLogo,
+                          child: Image.asset(AppAssets.icLogo,
                               height: 60), // Placeholder for logo
                         ),
-                        Text(
-                          "Login",
-                          style:
-                              TextStyle(color: AppColors.white, fontSize: 22),
-                        ),
-                        SizedBox(height: 20),
+
                         // Email & Password Fields
                         Container(
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: AppColors.inputBackground,
+                            color: AppColors.box_background,
                             borderRadius: BorderRadius.circular(18),
                           ),
                           child: Column(
                             children: [
+                              SizedBox(height: 20),
+                              Text(
+                                AppStrings.log_in,
+                                style: TextStyle(
+                                    color: AppColors.black,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,),
+                              ),
+                              SizedBox(height: 20),
                               Container(
                                 child: Text(
-                                  'Email',
+                                  AppStrings.email,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 16,
-                                  ),
+                                      color: AppColors.textTitle,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
                               const SizedBox(height: 8),
                               CommonTextField(
                                 decoration: InputDecoration(
-                                  hintText: 'Enter a valid Email',
-                                  hintStyle: TextStyle(
-                                    color: AppColors.hintColor,
-                                  ),
-                                  filled: true,
-                                  fillColor: AppColors.white,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: 16,
-                                    horizontal: 16,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
+                                    hintText: AppStrings.enter_email,
+                                    hintStyle: TextStyle(
+                                      color: AppColors.hintColor,
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColors.white,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 16,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                          color: Colors.red, width: 2),
+                                    )),
                                 commonController: _emailController,
                                 textInputType: TextInputType.emailAddress,
                               ),
@@ -196,12 +206,12 @@ class _LoginScreenState extends StateX<LoginScreen> {
                               const SizedBox(height: 20),
                               Container(
                                 child: Text(
-                                  'Password',
+                                  AppStrings.password,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 16,
-                                  ),
+                                      color: AppColors.textTitle,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
@@ -214,7 +224,7 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                   hintText: S.of(context).password,
                                   isShowPassword: _obscureText,
                                   decoration: InputDecoration(
-                                    hintText: 'Password',
+                                    hintText: AppStrings.enter_password,
                                     hintStyle: TextStyle(
                                       color: AppColors.hintColor,
                                     ),
@@ -227,6 +237,11 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide.none,
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                          color: Colors.red, width: 2),
                                     ),
                                     suffixIcon: GestureDetector(
                                       onTap: () {
@@ -259,15 +274,37 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                   ),
                                 ),
                               SizedBox(height: 20),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: GestureDetector(
+                                  child: Text(
+                                    AppStrings.forgot_password,
+                                    style: TextStyle(
+                                      color: AppColors.subTextGray,
+                                      fontSize: 14,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ForgotPassword(), //ForgotPassword(),
+                                        ));
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 30),
                               // Register Button
                               PrimaryButton(
-                                btnColor: AppColors.blue,
+                                btnColor: AppColors.theme_carrot,
                                 /*btnColor: isEnableBtn
                                     ? AppColors.lightBlue
                                     : AppColors.grayColor,*/
-                                Text('Login',
+                                Text(AppStrings.loginButton,
                                     style: TextStyle(
-                                        fontSize: 20, color: AppColors.white)),
+                                        fontSize: 20, color: AppColors.white, fontWeight: FontWeight.bold)),
                                 () {
                                   Helper.hideKeyBoard(context);
                                   checkValidation();
@@ -336,49 +373,33 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
-                                backgroundColor: AppColors.blue,
+                                backgroundColor: AppColors.theme_carrot,
                               ),
-                              SizedBox(height: 20),
-                              GestureDetector(
-                                child: Text(
-                                  "Forgot Password?",
-                                  style: TextStyle(
-                                      color: AppColors.white, fontSize: 18),
-                                ),
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ForgotPassword(), //ForgotPassword(),
-                                      ));
-                                },
-                              )
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 30),
                         // Login Section
                         Container(
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.bgGrayColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
                           child: Column(
                             children: [
                               Text(
-                                "Need an Account?",
+                                AppStrings.dont_have_account,
                                 style: TextStyle(
-                                    color: AppColors.white, fontSize: 18),
+                                    color: AppColors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 10),
-                              PrimaryButton(
-                                btnColor: AppColors.red,
-                                Text("Register Now",
-                                    style: TextStyle(
-                                        fontSize: 20, color: AppColors.white)),
-                                () {
+                              GestureDetector(
+                                child: Text(
+                                  AppStrings.sign_up,
+                                  style: TextStyle(
+                                      color: AppColors.theme_carrot,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -386,10 +407,6 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                             RegistrationScreen(),
                                       ));
                                 },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                backgroundColor: AppColors.red,
                               )
                             ],
                           ),

@@ -1,4 +1,4 @@
-import 'package:betus/assets/app_theme.dart';
+import 'package:bet_online_latest_odds/assets/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../assets/app_colors.dart';

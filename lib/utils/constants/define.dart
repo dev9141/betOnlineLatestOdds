@@ -23,6 +23,7 @@ const PASSWORD_LENGTH_MIN = 6;
 const PASSWORD_LENGTH_MAX = 16;
 const OTP_LENGTH = 6;
 const USER_NAME_LENGTH_MIN = 8;
+const FIRST_NAME_LENGTH_MIN = 50;
 
 
 const dateFormat = "dd-MM-yyyy";

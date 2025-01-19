@@ -1,5 +1,5 @@
-import 'package:betus/screens/login_screen.dart';
-import 'package:betus/screens/splash_screen.dart';
+import 'package:bet_online_latest_odds/screens/login_screen.dart';
+import 'package:bet_online_latest_odds/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
         print("isDarkTheme ${isDarkTheme.value}");
         return MaterialApp(
           navigatorKey: navigatorKey,
-          title: 'Flutter Master',
+          title: 'Bet Online Latest Odds',
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             S.delegate,
