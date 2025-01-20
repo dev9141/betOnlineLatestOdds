@@ -1,4 +1,5 @@
 import 'package:bet_online_latest_odds/assets/app_assets.dart';
+import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
 import 'package:bet_online_latest_odds/screens/home_screen.dart';
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/views/custom_widgets/common_textfield.dart';
@@ -6,7 +7,9 @@ import 'package:bet_online_latest_odds/views/custom_widgets/primary_button.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:state_extended/state_extended.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../controller/UserController.dart';
 import '../../assets/app_colors.dart';
@@ -35,20 +38,33 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   bool _obscureText = true;
   String? emailError;
   String? passwordError;
   String? userNameError;
-  String? firstNameRequired;
+  String? firstNameError;
+  String? phoneNumberError;
   bool isValidation = false;
   bool isEnableBtn = false;
   bool _isLoading = false;
   late UserController userController;
+  bool _termsAccepted = false;
 
   _RegistrationScreenState() : super(controller: UserController()) {
     // Acquire a reference to the passed Controller.
     userController = controller as UserController;
+  }
+
+  Future<void> _launchTermsUrl() async {
+    final Uri url = Uri.parse(PreferenceManager.getTnCUrl());
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    }
+    else{
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    }
   }
 
   @override
@@ -84,17 +100,16 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
               child: Stack(
                 children: [
                   SingleChildScrollView(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Logo
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Image.asset(AppAssets.icLogo,
-                              height: 60), // Placeholder for logo
+                              height: 40), // Placeholder for logo
                         ),
-                        SizedBox(height: 20),
                         // Email & Password Fields
                         Container(
                           margin: const EdgeInsets.all(8.0),
@@ -112,7 +127,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                   color: AppColors.black,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,),
-                              ),const SizedBox(height: 20),
+                              ),const SizedBox(height: 6),
                               Container(
                                 child: Text(
                                   AppStrings.firstName,
@@ -124,7 +139,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 4),
                               Container(
                                 height: 50,
                                 child: CommonTextField(
@@ -149,7 +164,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                   ),
                                 ),
                               ),
-                              if (firstNameRequired != null)
+                              if (firstNameError != null)
                                 Container(
                                   margin: const EdgeInsets.only(
                                     left: 20,
@@ -158,7 +173,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                   ),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    firstNameRequired ?? '',
+                                    firstNameError ?? '',
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
@@ -174,7 +189,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 4),
                               CommonTextField(
                                 decoration: InputDecoration(
                                   hintText: AppStrings.emailHint,
@@ -208,7 +223,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 6),
                               Container(
                                 child: Text(
                                   AppStrings.password,
@@ -220,7 +235,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 4),
                               Container(
                                 height: 50,
                                 child: CommonTextField(
@@ -273,7 +288,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 6),
                               Container(
                                 child: Text(
                                   AppStrings.userName,
@@ -285,13 +300,12 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 4),
                               Container(
                                 height: 50,
                                 child: CommonTextField(
                                   commonController: _userNameController,
                                   textInputType: TextInputType.text,
-                                  hintText: S.of(context).password,
                                   decoration: InputDecoration(
                                     hintText: 'Create a User Name',
                                     hintStyle: TextStyle(
@@ -335,15 +349,15 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 4),
                               Container(
                                 height: 50,
                                 child: CommonTextField(
-                                  commonController: _userNameController,
+                                  commonController: _phoneNumberController,
                                   textInputType: TextInputType.phone,
                                   hintText: AppStrings.phone_hint,
                                   decoration: InputDecoration(
-                                    hintText: 'Create a User Name',
+                                    hintText: AppStrings.phone_hint,
                                     hintStyle: TextStyle(
                                       color: AppColors.hintColor,
                                     ),
@@ -360,7 +374,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                   ),
                                 ),
                               ),
-                              if (userNameError != null)
+                              if (phoneNumberError != null)
                                 Container(
                                   margin: const EdgeInsets.only(
                                     left: 20,
@@ -369,10 +383,36 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                   ),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    userNameError ?? '',
+                                    phoneNumberError ?? '',
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
+                              SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: _termsAccepted,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _termsAccepted = value!;
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: _launchTermsUrl,
+                                      child: const Text(
+                                        'I accept the Terms and Conditions',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               SizedBox(height: 12),
                               // Register Button
                               PrimaryButton(
@@ -451,10 +491,10 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 15),
                         // Login Section
                         Container(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
                               Text(
@@ -510,7 +550,8 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       emailError = null;
       passwordError = null;
       userNameError = null;
-      firstNameRequired = null;
+      firstNameError = null;
+      phoneNumberError = null;
       isValidation = false;
     });
 
@@ -571,18 +612,37 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       });
     }
 
+    if (!_termsAccepted) {
+      AlertHelper.showToast(
+          "Please accept term and consitions");
+      isValidation = false;
+    }
+
     if (_firstNameController.text.trim().isEmpty) {
       setState(() {
-        firstNameRequired = AppStrings.firstNameRequired;
+        firstNameError = AppStrings.firstNameRequired;
         isValidation = false;
       });
     } else if (_firstNameController.text.trim().length < FIRST_NAME_LENGTH_MIN) {
       setState(() {
-        firstNameRequired =
+        firstNameError =
             S.of(context).err_user_name_min_length(FIRST_NAME_LENGTH_MIN);
         isValidation = false;
       });
     }
+
+    /*if (_phoneNumberController.text.trim().isEmpty) {
+      setState(() {
+        phoneNumberError = AppStrings.phoneNumberRequired;
+        isValidation = false;
+      });
+    } else if (_phoneNumberController.text.trim().length < PHONE_NUMBER_LENGTH_MIN) {
+      setState(() {
+        phoneNumberError =
+            S.of(context).err_user_name_min_length(PHONE_NUMBER_LENGTH_MIN);
+        isValidation = false;
+      });
+    }*/
   }
 
   void setData() {
@@ -591,6 +651,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       user.password = _passwordController.text.toString().trim();
       user.username = _userNameController.text.toString().trim();
       user.firstName = _firstNameController.text.toString().trim();
+      user.phoneNumber = _phoneNumberController.text.toString().trim();
     });
   }
 }

@@ -59,12 +59,16 @@ class ConfigurationData {
 	List<String> injectJs = List.empty();
 	List<String> injectJsOnEnd = List.empty();
 	List<String> injectJsOnNavigationStateChange = List.empty();
+	String privacyPolicyUrl = "";
+	String tncUrl = "";
+	String supportUrl = "";
+	String faqUrl = "";
 	ConfigurationData();
 
 	ConfigurationData.fromJson(Map<String, dynamic> json)
 	{
-		webviewUrl = json["WEBVIEW_URL"];
-		includeUrl =  json["INCLUDE_URL"];
+		webviewUrl = json["WEBVIEW_URL_ODDS"];
+		includeUrl =  json["INCLUDE_URL_ODDS"];
 		style =  Style.fromJson(json["STYLE"]);
 		elements =  List<String>.from(json["ELEMENTS"].map((x) => x));
 		injectJsOnStart =  List<String>.from(json["INJECT_JS_ON_START"].map((x) => x));
@@ -74,11 +78,15 @@ class ConfigurationData {
 		injectJsOnEnd =  List<String>.from(json["INJECT_JS_ON_END"].map((x) => x));
 		injectJsOnNavigationStateChange =  List<String>.from(json["INJECT_JS_ON_NAVIGATION_STATE_CHANGE"].map((x) => x));
 		guestUser = json["guest_user"]??"false";
+		privacyPolicyUrl =  json["PRIVACY_POLICY"];
+		tncUrl =  json["TERM_CONDITIONS"];
+		supportUrl =  json["SUPPORT"];
+		faqUrl =  json["FAQ"];
 	}
 
 	Map<String, dynamic> toJson() => {
-		"WEBVIEW_URL": webviewUrl,
-		"INCLUDE_URL": includeUrl,
+		"WEBVIEW_URL_ODDS": webviewUrl,
+		"INCLUDE_URL_ODDS": includeUrl,
 		"STYLE": style.toJson(),
 		"guest_user": guestUser??"false",
 		"ELEMENTS": List<dynamic>.from(elements.map((x) => x)),
@@ -88,6 +96,10 @@ class ConfigurationData {
 		"INJECT_JS": List<dynamic>.from(injectJs.map((x) => x)),
 		"INJECT_JS_ON_END": List<dynamic>.from(injectJsOnEnd.map((x) => x)),
 		"INJECT_JS_ON_NAVIGATION_STATE_CHANGE": List<dynamic>.from(injectJsOnNavigationStateChange.map((x) => x)),
+		"PRIVACY_POLICY": privacyPolicyUrl,
+		"TERM_CONDITIONS": tncUrl,
+		"SUPPORT": supportUrl,
+		"FAQ": faqUrl,
 	};
 
 
@@ -101,10 +113,7 @@ class Style {
 	String mainColor = "";
 	String buttonColor = "";
 	String buttonTextColor = "";
-	String privacyPolicyUrl = "";
-	String tncUrl = "";
-	String supportUrl = "";
-	String faqUrl = "";
+	String transitionTimer = "";
 
 	Style();
 
@@ -112,20 +121,14 @@ class Style {
 		mainColor = json["MAIN_COLOR"];
 		buttonColor = json["BUTTON_COLOR"];
 		buttonTextColor = json["BUTTON_TEXT_COLOR"];
-		privacyPolicyUrl =  json["PRIVACY_POLICY"];
-		tncUrl =  json["TERM_CONDITIONS"];
-		supportUrl =  json["SUPPORT"];
-		faqUrl =  json["FAQ"];
+		transitionTimer = json["TRANSITION_TIMER"];
 	}
 
 	Map<String, dynamic> toJson() => {
 		"MAIN_COLOR": mainColor,
 		"BUTTON_COLOR": buttonColor,
 		"BUTTON_TEXT_COLOR": buttonTextColor,
-		"PRIVACY_POLICY": privacyPolicyUrl,
-		"TERM_CONDITIONS": tncUrl,
-		"SUPPORT": supportUrl,
-		"FAQ": faqUrl,
+		"TRANSITION_TIMER": transitionTimer,
 	};
 }
 

@@ -1,10 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppUrl {
-  static const String apiKey = '6YN7KNAqMmxu8naBfiWuBAHghjvNMHUJBjhvjBB1I87JRpLuL';
+  static const String apiKey = 'qXpzsZGWwntGcgDl7ZGH6j0DmjUXAk5RJFzmypGrNr';
       /*'qXpzsZGWwntGcgDl7ZGH6j0DmjUXAk5RJFzmypGrNr';*/
 
-  static String _api_base_url = "https://game.bu-nba.com/api/";
+  static String _api_base_url = "https://bolapps.5monkeydevelopments.com/api/";
+  //static String _api_base_url = "https://game.bu-nba.com/api/";
   //static String _api_base_url = "https://game.5monkeygames.com/api/";
 
   static String terms_service = "https://www.google.com/";

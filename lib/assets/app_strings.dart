@@ -35,6 +35,8 @@ class AppStrings {
   //register
   static const String already_have_account = 'Already have an account?';
   static const String firstNameRequired = 'User name is required.';
+  static const String phoneNumberRequired = 'Phone number is required.';
+  static const String phoneNumberLength = 'Enter valid phone number.';
   static const String enter_first_name = 'Enter your first name';
 
   static const String createAccount = 'Create Account';

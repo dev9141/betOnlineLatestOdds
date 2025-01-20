@@ -467,7 +467,9 @@ class UserRepository {
         "email": user.email,
         "password": user.password,
         "device_name": Helper.getDeviceType(),
-        "username": user.username
+        "username": user.username,
+        "first_name": user.firstName,
+        "phone_number": user.phoneNumber
       },
     );
     logPrint("signup  response ${response.statusCode} $url ${response.body}");

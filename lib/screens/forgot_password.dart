@@ -81,7 +81,7 @@ class _ForgotPasswordState extends StateX<ForgotPassword> {
                   Text(
                     "Enter the email address associated with your account, and we’ll send you a link to reset your password.",
                     style:
-                        TextStyle(color: AppColors.hintColor, fontSize: 16),
+                        TextStyle(color: AppColors.white, fontSize: 16),
                   ),
                   SizedBox(height: 20),
                   // Email & Password Fields
@@ -89,7 +89,7 @@ class _ForgotPasswordState extends StateX<ForgotPassword> {
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
-                      color: AppColors.inputBackground,
+                      color: AppColors.box_background,
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Column(
@@ -143,7 +143,7 @@ class _ForgotPasswordState extends StateX<ForgotPassword> {
                         SizedBox(height: 20),
                         // Register Button
                         PrimaryButton(
-                          btnColor: AppColors.red,
+                          btnColor: AppColors.theme_carrot,
                           /*btnColor: isEnableBtn
                               ? AppColors.lightBlue
                               : AppColors.grayColor,*/
@@ -262,7 +262,7 @@ class _ForgotPasswordState extends StateX<ForgotPassword> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          backgroundColor: AppColors.red,
+                          backgroundColor: AppColors.theme_carrot,
                         ),
                         SizedBox(height: 20),
                         GestureDetector(

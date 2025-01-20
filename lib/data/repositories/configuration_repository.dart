@@ -76,10 +76,10 @@ class ConfigurationRepository {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);
         ConfigurationEntity configurationEntity = ConfigurationEntity.fromJson(objJsonObject);
-        PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.style.privacyPolicyUrl);
-        PreferenceManager.setSupportUrl(configurationEntity.data.style.supportUrl);
-        PreferenceManager.setFAQUrl(configurationEntity.data.style.faqUrl);
-        PreferenceManager.setTnCUrl(configurationEntity.data.style.tncUrl);
+        PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.privacyPolicyUrl);
+        PreferenceManager.setSupportUrl(configurationEntity.data.supportUrl);
+        PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
+        PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
         /*String accessToken = objJsonObject['access_token'];
         setEmail(user.email);
         setAccessToken(accessToken);
@@ -151,10 +151,10 @@ class ConfigurationRepository {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);
         PubConfigurationEntity configurationEntity = PubConfigurationEntity.fromJson(objJsonObject);
-        PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.style.privacyPolicyUrl);
-        PreferenceManager.setSupportUrl(configurationEntity.data.style.supportUrl);
-        PreferenceManager.setFAQUrl(configurationEntity.data.style.faqUrl);
-        PreferenceManager.setTnCUrl(configurationEntity.data.style.tncUrl);
+        PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.privacyPolicyUrl);
+        PreferenceManager.setSupportUrl(configurationEntity.data.supportUrl);
+        PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
+        PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
         PreferenceManager.setIsAllowGuestUser(configurationEntity.data.guestUser!.toLowerCase() == "true");
 
         /*String accessToken = objJsonObject['access_token'];

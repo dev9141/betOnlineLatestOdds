@@ -75,7 +75,7 @@ class _PasswordEmailSendState extends StateX<PasswordEmailSend> {
                       SizedBox(height: 8),
                       Text(
                         "We just sent email you a code for reset password.",
-                        style: TextStyle(color: AppColors.hintColor, fontSize: 16),
+                        style: TextStyle(color: AppColors.white, fontSize: 16),
                       ),
                       SizedBox(height: 5),
                       Container(

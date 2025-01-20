@@ -132,7 +132,7 @@ class _LoginScreenState extends StateX<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Image.asset(AppAssets.icLogo,
-                              height: 60), // Placeholder for logo
+                              height: 40), // Placeholder for logo
                         ),
                         // Email & Password Fields
                         Container(
@@ -286,12 +286,12 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                     ),
                                   ),
                                   onTap: () {
-                                    Navigator.pushReplacement(
+                                    /*Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               ForgotPassword(), //ForgotPassword(),
-                                        ));
+                                        ));*/
                                   },
                                 ),
                               ),
@@ -412,6 +412,7 @@ class _LoginScreenState extends StateX<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: 20),
+/*
                         isShowGuestUser
                             ? GestureDetector(
                                 onTap: () {
@@ -440,7 +441,8 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                                 builder: (context) =>
                                                     HomeScreen(),
                                               ));
-                                          /*screenType = Screen.register;
+                                          */
+/*screenType = Screen.register;
                                             Navigator.of(context)
                                                 .pushReplacementNamed(
                                                     Screen.emailVerification,
@@ -448,7 +450,8 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                                   'email': _emailController.text
                                                       .toString()
                                                       .trim()
-                                                });*/
+                                                });*//*
+
                                         } else {
                                           if (value is APIError) {
                                             setState(() {
@@ -477,6 +480,7 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                 ),
                               )
                             : Container()
+*/
                       ],
                     ),
                   )

@@ -94,7 +94,7 @@ class _HubScreenState extends StateX<HubScreen> {
       );
     }
     return WebViewWithJsInjection(
-      url: _config!['WEBVIEW_URL'],
+      url: _config!['WEBVIEW_URL_ODDS'],
       configuration: _config!,
     );
   }

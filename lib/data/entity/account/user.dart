@@ -13,6 +13,7 @@ class User {
   bool isEmailVerified = false;
   String username = "";
   String firstName = "";
+  String phoneNumber = "";
   String type = "";
   String emailVerificationSentAt = "";
   String wallet = "";
@@ -28,6 +29,8 @@ class User {
       isEmailVerified = jsonMap['isEmailVerified'] ?? false;
       accessToken = jsonMap['accessToken'] ?? '';
       username = jsonMap['username'] ?? '';
+      firstName = jsonMap['firstName'] ?? '';
+      phoneNumber = jsonMap['phoneNumber'] ?? '';
       code = jsonMap['code'] ?? '';
       type = jsonMap['type'] ?? '';
       emailVerificationSentAt = jsonMap['email_verification_sent_at'] ?? '';
@@ -45,6 +48,8 @@ class User {
     map["accessToken"] = accessToken ?? '';
     map["type"] = type ?? '';
     map["username"] = username ?? '';
+    map["phoneNumber"] = phoneNumber ?? '';
+    map["firstName"] = firstName ?? '';
     return map;
   }
 
