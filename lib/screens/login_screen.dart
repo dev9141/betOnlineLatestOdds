@@ -286,12 +286,12 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                     ),
                                   ),
                                   onTap: () {
-                                    /*Navigator.pushReplacement(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               ForgotPassword(), //ForgotPassword(),
-                                        ));*/
+                                        ));
                                   },
                                 ),
                               ),
@@ -412,7 +412,6 @@ class _LoginScreenState extends StateX<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: 20),
-/*
                         isShowGuestUser
                             ? GestureDetector(
                                 onTap: () {
@@ -441,17 +440,6 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                                 builder: (context) =>
                                                     HomeScreen(),
                                               ));
-                                          */
-/*screenType = Screen.register;
-                                            Navigator.of(context)
-                                                .pushReplacementNamed(
-                                                    Screen.emailVerification,
-                                                    arguments: {
-                                                  'email': _emailController.text
-                                                      .toString()
-                                                      .trim()
-                                                });*//*
-
                                         } else {
                                           if (value is APIError) {
                                             setState(() {
@@ -480,7 +468,6 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                 ),
                               )
                             : Container()
-*/
                       ],
                     ),
                   )

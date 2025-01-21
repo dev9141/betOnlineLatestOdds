@@ -391,6 +391,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                               Row(
                                 children: [
                                   Checkbox(
+                                    focusColor: AppColors.red,
                                     value: _termsAccepted,
                                     onChanged: (value) {
                                       setState(() {
@@ -405,7 +406,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                         'I accept the Terms and Conditions',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Colors.blue,
+                                          color: AppColors.red,
                                           decoration: TextDecoration.underline,
                                         ),
                                       ),
