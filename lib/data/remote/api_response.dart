@@ -7,7 +7,7 @@ class APIResponse {
   Object? object;
   APIResponse(this.response, this.message, this.success, [this.object]);
 
-/*factory APIResponse.fromMap(Map<String, dynamic> json) {
+/*\factory APIResponse.fromMap(Map<String, dynamic> json) {
     return APIResponse(,json.isEmpty ? S.current.err_msg : json["message"],
         json.isEmpty ? false : true);
   }*/

@@ -456,6 +456,10 @@ class UserRepository {
     }
   }
 
+  String formatPhoneNumber(String phone) {
+    return '${phone.substring(0, 3)}-${phone.substring(3, 6)}-${phone.substring(6, 10)}';
+  }
+
   Future<Object> register(User user) async {
     final String url = AppUrl.register;
     var uri = Uri.parse(url);
@@ -467,12 +471,12 @@ class UserRepository {
         "email": user.email,
         "password": user.password,
         "device_name": Helper.getDeviceType(),
-        "username": user.username,
-        "first_name": user.firstName,
-        "phone_number": user.phoneNumber
+        "username": user.firstName,
+        // "first_name": user.firstName,
+        "phone": user.phoneNumber,
       },
     );
-    logPrint("signup  response ${response.statusCode} $url ${response.body}");
+    logPrint("signup  response ${response.statusCode} $url,  ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);

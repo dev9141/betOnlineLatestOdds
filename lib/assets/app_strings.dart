@@ -3,9 +3,9 @@ class AppStrings {
   static const String appTitle = 'Registration Screen';
   static const String splashSubTitle = 'LATEST ODDS';
   static const String signUpTitle = 'Sign up for updates & notifications';
-  static const String passwordHint = 'Enter a Password';
+  static const String passwordHint = 'Enter a password';
   static const String registerButton = 'Register';
-  static const String emailHint = 'Enter a valid Email';
+  static const String emailHint = 'Enter a valid email';
   static const String sign_up = 'Sign Up';
   static const String needToLogin = 'Need to Login?';
   static const String loginButton = 'Login';
@@ -14,7 +14,7 @@ class AppStrings {
   static const String successMessage = 'Registered successfully!';
   static const String errorMessage = 'Failed to register';
   static const String emptyFieldsError = 'Please enter both email and password';
-  static const String userName = 'User Name';
+  // static const String userName = 'User Name';
   static const String firstName = 'First Name';
 
   //Login field text
@@ -34,7 +34,7 @@ class AppStrings {
 
   //register
   static const String already_have_account = 'Already have an account?';
-  static const String firstNameRequired = 'User name is required.';
+  static const String firstNameRequired = 'First name is required.';
   static const String phoneNumberRequired = 'Phone number is required.';
   static const String phoneNumberLength = 'Enter valid phone number.';
   static const String enter_first_name = 'Enter your first name';

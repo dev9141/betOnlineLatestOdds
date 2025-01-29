@@ -179,7 +179,7 @@ class S {
       args: [],
     );
   }
-
+/*
   String get err_user_name {
     return Intl.message(
       'User name is required.',
@@ -188,7 +188,7 @@ class S {
       args: [],
     );
   }
-
+*/
   /// `Gallery`
   String get gallery {
     return Intl.message(
@@ -991,7 +991,7 @@ class S {
 
   String err_user_name_min_length(Object length) {
     return Intl.message(
-      'User name must be more than $length characters.',
+      'First name must be more than $length characters.',
       name: 'err_user_name_min_length',
       desc: '',
       args: [length],
@@ -1007,6 +1007,14 @@ class S {
     );
   }
 
+  String err_phone_length(Object length) {
+    return Intl.message(
+      'Phone number must be of $length numbers.',
+      name: 'err_phone_length',
+      desc: '',
+      args: [length],
+    );
+  }
   /// `Submit`
   String get submit {
     return Intl.message(

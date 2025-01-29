@@ -49,7 +49,7 @@ class User {
     map["type"] = type ?? '';
     map["username"] = username ?? '';
     map["phoneNumber"] = phoneNumber ?? '';
-    map["firstName"] = firstName ?? '';
+    map["firstName"] = username ?? '';
     return map;
   }
 

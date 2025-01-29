@@ -36,14 +36,13 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   User user = User();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
   bool _obscureText = true;
   String? emailError;
   String? passwordError;
-  String? userNameError;
+  // String? userNameError;
   String? firstNameError;
   String? phoneNumberError;
   bool isValidation = false;
@@ -130,56 +129,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                               ),const SizedBox(height: 6),
                               Container(
                                 child: Text(
-                                  AppStrings.firstName,
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    color: AppColors.textTitle,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              const SizedBox(height: 4),
-                              Container(
-                                height: 50,
-                                child: CommonTextField(
-                                  commonController: _firstNameController,
-                                  textInputType: TextInputType.text,
-                                  hintText: AppStrings.enter_first_name,
-                                  decoration: InputDecoration(
-                                    hintText: 'Create a User Name',
-                                    hintStyle: TextStyle(
-                                      color: AppColors.hintColor,
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColors.white,
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 16,
-                                      horizontal: 16,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              if (firstNameError != null)
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
-                                    top: 4,
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    firstNameError ?? '',
-                                    style: AppTheme.errorTextTheme,
-                                  ),
-                                ),
-                              SizedBox(height: 12),
-                              Container(
-                                child: Text(
                                   AppStrings.email,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
@@ -226,6 +175,56 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                               const SizedBox(height: 6),
                               Container(
                                 child: Text(
+                                  AppStrings.firstName,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: AppColors.textTitle,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              const SizedBox(height: 4),
+                              Container(
+                                height: 50,
+                                child: CommonTextField(
+                                  commonController: _firstNameController,
+                                  textInputType: TextInputType.text,
+                                  hintText: AppStrings.enter_first_name,
+                                  decoration: InputDecoration(
+                                    hintText: 'Create a first name',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.hintColor,
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColors.white,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 16,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (firstNameError != null)
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                    top: 4,
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    firstNameError ?? '',
+                                    style: AppTheme.errorTextTheme,
+                                  ),
+                                ),
+                              SizedBox(height: 12),
+                              Container(
+                                child: Text(
                                   AppStrings.password,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
@@ -244,7 +243,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                   hintText: AppStrings.passwordHint,
                                   isShowPassword: _obscureText,
                                   decoration: InputDecoration(
-                                    hintText: 'Create a Password',
+                                    hintText: 'Create a password',
                                     hintStyle: TextStyle(
                                       color: AppColors.hintColor,
                                     ),
@@ -288,56 +287,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                     style: AppTheme.errorTextTheme,
                                   ),
                                 ),
-                              const SizedBox(height: 6),
-                              Container(
-                                child: Text(
-                                  AppStrings.userName,
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    color: AppColors.textTitle,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              const SizedBox(height: 4),
-                              Container(
-                                height: 50,
-                                child: CommonTextField(
-                                  commonController: _userNameController,
-                                  textInputType: TextInputType.text,
-                                  decoration: InputDecoration(
-                                    hintText: 'Create a User Name',
-                                    hintStyle: TextStyle(
-                                      color: AppColors.hintColor,
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColors.white,
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 16,
-                                      horizontal: 16,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              if (userNameError != null)
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
-                                    top: 4,
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    userNameError ?? '',
-                                    style: AppTheme.errorTextTheme,
-                                  ),
-                                ),
-                              SizedBox(height: 12,),
+                              SizedBox(height: 12),
                               Container(
                                 child: Text(
                                   AppStrings.phone_number,
@@ -550,7 +500,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
     setState(() {
       emailError = null;
       passwordError = null;
-      userNameError = null;
+      // userNameError = null;
       firstNameError = null;
       phoneNumberError = null;
       isValidation = false;
@@ -600,19 +550,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       });
     }
 
-    if (_userNameController.text.trim().isEmpty) {
-      setState(() {
-        userNameError = S.of(context).err_user_name;
-        isValidation = false;
-      });
-    } else if (_userNameController.text.trim().length < USER_NAME_LENGTH_MIN) {
-      setState(() {
-        userNameError =
-            S.of(context).err_user_name_min_length(USER_NAME_LENGTH_MIN);
-        isValidation = false;
-      });
-    }
-
     if (!_termsAccepted) {
       AlertHelper.showToast(
           "Please accept term and consitions");
@@ -632,25 +569,24 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       });
     }
 
-    /*if (_phoneNumberController.text.trim().isEmpty) {
+    if (_phoneNumberController.text.trim().isEmpty) {
       setState(() {
         phoneNumberError = AppStrings.phoneNumberRequired;
         isValidation = false;
       });
-    } else if (_phoneNumberController.text.trim().length < PHONE_NUMBER_LENGTH_MIN) {
+    } else if (_phoneNumberController.text.trim().length != PHONE_NUMBER_LENGTH) {
       setState(() {
         phoneNumberError =
-            S.of(context).err_user_name_min_length(PHONE_NUMBER_LENGTH_MIN);
+            S.of(context).err_phone_length(PHONE_NUMBER_LENGTH);
         isValidation = false;
       });
-    }*/
+    }
   }
 
   void setData() {
     setState(() {
       user.email = _emailController.text.toString().trim();
       user.password = _passwordController.text.toString().trim();
-      user.username = _userNameController.text.toString().trim();
       user.firstName = _firstNameController.text.toString().trim();
       user.phoneNumber = _phoneNumberController.text.toString().trim();
     });

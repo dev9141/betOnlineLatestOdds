@@ -25,7 +25,7 @@ class AppUrl {
   static String login = "${getAPIBaseURL()}auth/login";
   static String deleteAccount = "${getAPIBaseURL()}auth/delete";
   static String loginAsGuest = "${getAPIBaseURL()}auth/guest";
-  static String register = "${getAPIBaseURL()}auth/create";
+  static String register = "${getAPIBaseURL()}auth/createBolUser";
   static String forgotPassword = "${getAPIBaseURL()}auth/forgot";
   static String logout = "${getAPIBaseURL()}auth/logout";
   static String resetPassword = "${getAPIBaseURL()}auth/reset";
