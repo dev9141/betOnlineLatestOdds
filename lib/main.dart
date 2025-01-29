@@ -1,3 +1,4 @@
+import 'package:bet_online_latest_odds/screens/DynamicUrlWebView.dart';
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,17 @@ Widget setHome() {
   } else {
     return const IntroScreen();
   }*/
-  return const SplashScreen();
+  Map<String, String> formData = {
+    "FirstName": "JohnDoe1",
+    "EMail": "john.doe1@example.com",
+    "PasswordJ": "Password123",
+    "HomePhone": "9123456781",
+  };
+
+  return DynamicUrlWebView(
+    firstUrl: "https://record.betonlineaffiliates.ag/_on42CIkH5pz-a8CTELPmZWNd7ZgqdRLk/1/", // Initial URL
+    formData: formData,
+  ); //const SplashScreen();
 }
 
 class MyHomePage extends StatefulWidget {
@@ -144,5 +155,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void openDynamicUrlWebView(BuildContext context) {
+    Map<String, String> formData = {
+      "username": "JohnDoe",
+      "email": "john.doe@example.com",
+      "password": "Password123",
+    };
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DynamicUrlWebView(
+          firstUrl: "https://example.com/start", // Initial URL
+          formData: formData,
+        ),
+      ),
+    ).then((response) {
+      // Handle response after form submission
+      if (response != null) {
+        print("Response from WebView: $response");
+      }
+    });
   }
 }
