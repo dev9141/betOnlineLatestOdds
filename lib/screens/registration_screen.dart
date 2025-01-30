@@ -23,7 +23,6 @@ import '../../utils/helper/alert_helper.dart';
 import '../../utils/helper/helper.dart';
 import '../assets/app_strings.dart';
 import '../assets/app_theme.dart';
-import 'DynamicUrlWebView.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -141,12 +140,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
     // Generate JavaScript for autofill and form submission
     String jsCode = _generateJavaScript(formData);
     // Execute JavaScript in WebView
-    await _webViewController.runJavaScript(jsCode);
-  }
-
-
-  void _handleWebViewForm(Map<String, String> formData) async {
-    final jsCode = _generateJavaScript(formData);
     await _webViewController.runJavaScript(jsCode);
   }
 
@@ -607,6 +600,11 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                       : null,
                 ),
               ),
+              if (_isWebViewLoading)
+                const Opacity(
+                  opacity: 0.8,
+                  child: ModalBarrier(dismissible: false, color: Colors.black),
+                ),
               if (_isWebViewLoading)
                 const Center(
                   child: CircularProgressIndicator(),

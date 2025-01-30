@@ -1,4 +1,3 @@
-import 'package:bet_online_latest_odds/screens/DynamicUrlWebView.dart';
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
 import 'package:flutter/material.dart';

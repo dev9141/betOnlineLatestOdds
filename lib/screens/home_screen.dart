@@ -4,8 +4,6 @@ import 'package:bet_online_latest_odds/assets/app_colors.dart';
 import 'package:bet_online_latest_odds/controller/ConfigurationController.dart';
 import 'package:bet_online_latest_odds/data/entity/configuration_entity.dart';
 import 'package:bet_online_latest_odds/screens/account_screen.dart';
-import 'package:bet_online_latest_odds/screens/bottom_sheets/account_bottom_sheet.dart';
-import 'package:bet_online_latest_odds/screens/bottom_sheets/logout_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,8 +18,6 @@ import '../data/remote/api_error.dart';
 import '../data/remote/api_response.dart';
 import '../utils/helper/alert_helper.dart';
 import '../utils/helper/helper.dart';
-import 'bottom_sheets/delete_account_bottom_sheet.dart';
-import 'bottom_sheets/menu_bottom_sheet.dart';
 import 'hub_screen.dart';
 import 'login_screen.dart';
 
