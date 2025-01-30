@@ -3,12 +3,10 @@ import 'package:bet_online_latest_odds/assets/app_theme.dart';
 import 'package:bet_online_latest_odds/controller/ConfigurationController.dart';
 import 'package:bet_online_latest_odds/data/entity/account/user.dart';
 import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
-import 'package:bet_online_latest_odds/screens/password_email_send.dart';
 import 'package:bet_online_latest_odds/screens/registration_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:state_extended/state_extended.dart';
 
 import '../assets/app_assets.dart';
@@ -16,10 +14,8 @@ import '../controller/UserController.dart';
 import '../assets/app_colors.dart';
 import '../data/remote/api_error.dart';
 import '../data/remote/api_response.dart';
-import '../data/repositories/user_repository.dart';
 import '../generated/l10n.dart';
 import '../utils/constants/define.dart';
-import '../utils/constants/screen.dart';
 import '../utils/helper/alert_helper.dart';
 import '../utils/helper/helper.dart';
 import '../views/custom_widgets/common_textfield.dart';
@@ -404,7 +400,7 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            RegistrationScreen(),
+                                            RegistrationScreen(), //RegistrationScreenTwo(),
                                       ));
                                 },
                               )

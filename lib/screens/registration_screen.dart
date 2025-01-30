@@ -6,10 +6,9 @@ import 'package:bet_online_latest_odds/views/custom_widgets/common_textfield.dar
 import 'package:bet_online_latest_odds/views/custom_widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../controller/UserController.dart';
 import '../../assets/app_colors.dart';
@@ -24,6 +23,7 @@ import '../../utils/helper/alert_helper.dart';
 import '../../utils/helper/helper.dart';
 import '../assets/app_strings.dart';
 import '../assets/app_theme.dart';
+import 'DynamicUrlWebView.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -51,6 +51,11 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   late UserController userController;
   bool _termsAccepted = false;
 
+  late WebViewController _webViewController;
+  bool _isWebViewLoading = false;
+  bool _isWebViewInitialized = false;
+  bool isFormUrlHandled = false;
+
   _RegistrationScreenState() : super(controller: UserController()) {
     // Acquire a reference to the passed Controller.
     userController = controller as UserController;
@@ -69,6 +74,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeWebView();
     _emailController.addListener(() {
       setState(() {
         isEnableBtn = _emailController.text.trim().isNotEmpty &&
@@ -84,13 +90,120 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
     });
   }
 
+  void _initializeWebView() {
+    _webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (url) {
+            print("WebView: Page started loading: $url");
+          },
+          onPageFinished: (url) {
+            print("WebView: Page finished loading: $url");
+            if (url.contains("https://api.betonline")) {
+              print("DynamicUrlWebView: second url 2");
+              //_handleFormUrl(url);
+              Map<String, String> formData = {
+                'FirstName': _firstNameController.text.trim(),
+                'EMail': _emailController.text.trim(),
+                'PasswordJ': _passwordController.text.trim(),
+                'HomePhone': _phoneNumberController.text.trim(),
+              };
+
+              print("DynamicUrlWebView: Page finished loading: $url");
+              if (!isFormUrlHandled && url.contains("/registrations?client_id")) {
+                print("DynamicUrlWebView: second url 2");
+                isFormUrlHandled = true;
+                _handleFormUrl(formData);
+              }
+              if (isFormUrlHandled && url.contains("registration?execution")) {
+                print("DynamicUrlWebView: second url 2");
+                AlertHelper.showToast("Registereted");
+                setState(() {
+                  _isWebViewLoading = false;
+                });
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                );
+              }
+            }
+
+          },
+        ),
+      );
+  }
+
+  void _handleFormUrl(Map<String, String> formData) async {
+
+    // Generate JavaScript for autofill and form submission
+    String jsCode = _generateJavaScript(formData);
+    // Execute JavaScript in WebView
+    await _webViewController.runJavaScript(jsCode);
+  }
+
+
+  void _handleWebViewForm(Map<String, String> formData) async {
+    final jsCode = _generateJavaScript(formData);
+    await _webViewController.runJavaScript(jsCode);
+  }
+
+  String _generateJavaScript(Map<String, String> formData) {
+    final StringBuffer jsBuffer = StringBuffer();
+
+    // Populate form fields
+    formData.forEach((fieldId, value) {
+      print("DynamicUrlWebView: key ${fieldId}, value: $value");
+      jsBuffer.writeln(
+        'document.getElementById("$fieldId").value = "$value";',
+      );
+      jsBuffer.writeln(
+        'document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
+      );
+      jsBuffer.writeln(
+        'document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
+      );
+      jsBuffer.writeln(
+        'document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
+      );
+      jsBuffer.writeln(
+        'document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
+      );
+    });
+    jsBuffer.writeln('setTimeout(function () {');
+    jsBuffer.writeln('document.getElementById("btnsubmit").disabled = false;');
+    jsBuffer.writeln('document.getElementById("btnsubmit").click();');
+    //jsBuffer.writeln('document.getElementById("btnsubmit").form.submit();');
+    jsBuffer.writeln('}, 5000);');
+
+    jsBuffer.writeln(
+
+    );
+    print("DynamicUrlWebView: inject ${jsBuffer.toString()}");
+    return jsBuffer.toString();
+  }
+
+
+  void _startWebViewProcess() {
+    setState(() {
+      _isWebViewLoading = true;
+    });
+
+    // Load initial URL
+    _webViewController.loadRequest(Uri.parse('https://record.betonlineaffiliates.ag/_on42CIkH5pz-a8CTELPmZWNd7ZgqdRLk/1/'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
           backgroundColor: AppColors.background,
-          body: DecoratedBox(
+          body: Stack(
+            children: [
+              DecoratedBox(
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(AppAssets.imgBackgroundTexture),
@@ -377,7 +490,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 () {
                                   Helper.hideKeyBoard(context);
                                   checkValidation();
-                                  if (isValidation) {
+                                  //if (isValidation) {
                                     Helper.isInternetConnectionAvailable()
                                         .then((internet) async {
                                       if (internet) {
@@ -405,12 +518,13 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                       .toString()
                                                       .trim()
                                                 });*/
-                                            Navigator.pushReplacement(
+                                            _startWebViewProcess();
+                                            /*Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       HomeScreen(),
-                                                ));
+                                                ));*/
                                           } else {
                                             if (value is APIError) {
                                               setState(() {
@@ -432,7 +546,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                             S.of(context).err_internet, true);
                                       }
                                     });
-                                  }
+                                  //}
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
@@ -481,6 +595,23 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                 ],
               ),
             ),
+          ),
+              // Hidden WebView
+              Opacity(
+                opacity: 0,
+                child: SizedBox(
+                  height: 1,
+                  width: 1,
+                  child: _isWebViewInitialized
+                      ? WebViewWidget(controller: _webViewController)
+                      : null,
+                ),
+              ),
+              if (_isWebViewLoading)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            ],
           ),
         ),
         if (_isLoading)

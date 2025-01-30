@@ -1,3 +1,4 @@
+import 'package:bet_online_latest_odds/screens/DynamicUrlWebView.dart';
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,17 @@ Widget setHome() {
   } else {
     return const IntroScreen();
   }*/
+  /*Map<String, String> formData = {
+    "FirstName": "JohnDoe9",
+    "EMail": "john.doe9@example.com",
+    "PasswordJ": "Password123",
+    "HomePhone": "6042011149",
+  };
+
+  return DynamicUrlWebView(
+    firstUrl: "https://record.betonlineaffiliates.ag/_on42CIkH5pz-a8CTELPmZWNd7ZgqdRLk/1/", // Initial URL
+    formData: formData,
+  );*/
   return const SplashScreen();
 }
 
