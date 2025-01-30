@@ -1,4 +1,6 @@
+import 'package:bet_online_latest_odds/utils/helper/alert_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DynamicUrlWebView extends StatefulWidget {
@@ -37,10 +39,15 @@ class _DynamicUrlWebViewState extends State<DynamicUrlWebView> {
           onPageFinished: (url) {
             print("DynamicUrlWebView: Page finished loading: $url");
             // Detect form URL dynamically
-            if (!isFormUrlHandled && url.contains("https://api.betonline")) {
+            //if (!isFormUrlHandled && url.contains("https://api.betonline")) {
+            if (!isFormUrlHandled && url.contains("/registrations?client_id")) {
               print("DynamicUrlWebView: second url 2");
               isFormUrlHandled = true;
               _handleFormUrl(url);
+            }
+            if (isFormUrlHandled && url.contains("registration?execution")) {
+              print("DynamicUrlWebView: second url 2");
+              AlertHelper.showToast("Registereted");
             }
           },
         ),
@@ -90,10 +97,11 @@ class _DynamicUrlWebViewState extends State<DynamicUrlWebView> {
         }, 1000); ''',
       );*/
     });
-    jsBuffer.writeln('setTimeout(function () {');
-    jsBuffer.writeln('document.getElementById("btnsubmit").disabled = false;');
-    jsBuffer.writeln('document.querySelector("form").submit();');
-    jsBuffer.writeln('}, 5000);');
+     jsBuffer.writeln('setTimeout(function () {');
+     jsBuffer.writeln('document.getElementById("btnsubmit").disabled = false;');
+    jsBuffer.writeln('document.getElementById("btnsubmit").click();');
+    //jsBuffer.writeln('document.getElementById("btnsubmit").form.submit();');
+     jsBuffer.writeln('}, 5000);');
 
     jsBuffer.writeln(
 
