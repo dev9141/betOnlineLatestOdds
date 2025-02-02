@@ -32,6 +32,7 @@ class AppUrl {
   static String configuration = "${getAPIBaseURL()}configuration";
   static String pubConfiguration = "${getAPIBaseURL()}pub-configuration";
   static String verifyEmail = "${getAPIBaseURL()}auth/resend";
+  static String signUpWebViewUrl = 'https://record.betonlineaffiliates.ag/_on42CIkH5pz-a8CTELPmZWNd7ZgqdRLk/1/';
 
   static const int successStatusCode = 200;
   static const int validationErrorStatusCode = 222;

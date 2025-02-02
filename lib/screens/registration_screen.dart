@@ -1,5 +1,6 @@
 import 'package:bet_online_latest_odds/assets/app_assets.dart';
 import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
+import 'package:bet_online_latest_odds/screens/DynamicUrlWebView.dart';
 import 'package:bet_online_latest_odds/screens/home_screen.dart';
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/views/custom_widgets/common_textfield.dart';
@@ -511,7 +512,19 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                       .toString()
                                                       .trim()
                                                 });*/
-                                            _startWebViewProcess();
+                                            //_startWebViewProcess();
+                                            Map<String, String> formData = {
+                                              'FirstName': _firstNameController.text.trim(),
+                                              'EMail': _emailController.text.trim(),
+                                              'PasswordJ': _passwordController.text.trim(),
+                                              'HomePhone': _phoneNumberController.text.trim(),
+                                            };
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DynamicUrlWebView(formData: formData,),
+                                                ));
                                             /*Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
@@ -591,7 +604,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
           ),
               // Hidden WebView
               Opacity(
-                opacity: 0,
+                opacity: 1,
                 child: SizedBox(
                   height: 1,
                   width: 1,
