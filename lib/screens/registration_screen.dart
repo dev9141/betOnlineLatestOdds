@@ -512,19 +512,19 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                       .toString()
                                                       .trim()
                                                 });*/
-                                            //_startWebViewProcess();
-                                            Map<String, String> formData = {
-                                              'FirstName': _firstNameController.text.trim(),
-                                              'EMail': _emailController.text.trim(),
-                                              'PasswordJ': _passwordController.text.trim(),
-                                              'HomePhone': _phoneNumberController.text.trim(),
-                                            };
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DynamicUrlWebView(formData: formData,),
-                                                ));
+                                            _startWebViewProcess();
+                                            // Map<String, String> formData = {
+                                            //   'FirstName': _firstNameController.text.trim(),
+                                            //   'EMail': _emailController.text.trim(),
+                                            //   'PasswordJ': _passwordController.text.trim(),
+                                            //   'HomePhone': _phoneNumberController.text.trim(),
+                                            // };
+                                            // Navigator.pushReplacement(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           DynamicUrlWebView(formData: formData,),
+                                            //     ));
                                             /*Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
