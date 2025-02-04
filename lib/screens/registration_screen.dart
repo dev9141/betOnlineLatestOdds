@@ -714,12 +714,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       });
     }
 
-    if (!_termsAccepted) {
-      AlertHelper.showToast(
-          "Please accept term and consitions");
-      isValidation = false;
-    }
-
     if (_firstNameController.text.trim().isEmpty) {
       setState(() {
         firstNameError = AppStrings.firstNameRequired;
@@ -744,6 +738,12 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
             S.of(context).err_phone_length(PHONE_NUMBER_LENGTH);
         isValidation = false;
       });
+    }
+
+    if (!_termsAccepted && isValidation) {
+      AlertHelper.showToast(
+          "Please accept term and consitions");
+      isValidation = false;
     }
   }
 
