@@ -484,7 +484,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                 () {
                                   Helper.hideKeyBoard(context);
                                   checkValidation();
-                                  //if (isValidation) {
+                                  if (isValidation) {
                                     Helper.isInternetConnectionAvailable()
                                         .then((internet) async {
                                       if (internet) {
@@ -552,7 +552,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                             S.of(context).err_internet, true);
                                       }
                                     });
-                                  //}
+                                  }
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
@@ -660,16 +660,38 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       });
     }
 
-    if (_passwordController.text.trim().isEmpty) {
+    String password = _passwordController.text.trim();
+    if (password.isEmpty) {
       setState(() {
         passwordError = S.of(context).err_password;
         isValidation = false;
       });
-    } else if (_passwordController.text.trim().length < PASSWORD_LENGTH_MIN) {
+    } else if (password.length < PASSWORD_LENGTH_MIN) {
       setState(() {
         passwordError =
             S.of(context).err_password_min_length(PASSWORD_LENGTH_MIN);
         isValidation = false;
+      });
+    }
+    else if (!RegExp(r'[A-Z]').hasMatch(password)) {
+      setState(() {
+        passwordError = S.of(context).err_password_uppercase();
+        isValidation = false;
+      });
+    } else if (!RegExp(r'[a-z]').hasMatch(password)) {
+      setState(() {
+        passwordError = S.of(context).err_password_lowercase();
+        isValidation = false;
+      });
+    } else if (!RegExp(r'\d').hasMatch(password)) {
+      setState(() {
+        passwordError = S.of(context).err_password_number();
+        isValidation = false;
+      });
+    } else {
+      setState(() {
+        passwordError = null;
+        isValidation = true;
       });
     }
     /*else if (_passwordController.text.trim().length > PASSWORD_LENGTH_MAX) {

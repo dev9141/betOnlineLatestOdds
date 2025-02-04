@@ -989,6 +989,30 @@ class S {
     );
   }
 
+  String err_password_uppercase() {
+    return Intl.message(
+      'Password must have at least 1 uppercase letter (A-Z)',
+      name: 'err_password_uppercase',
+      desc: '',
+    );
+  }
+
+  String err_password_lowercase() {
+    return Intl.message(
+      'Password must have at least 1 lowercase letter (a-z))',
+      name: 'err_password_lowercase',
+      desc: '',
+    );
+  }
+
+  String err_password_number() {
+    return Intl.message(
+      'Password must have At least 1 number (0-9)',
+      name: 'err_password_number',
+      desc: '',
+    );
+  }
+
   String err_user_name_min_length(Object length) {
     return Intl.message(
       'First name must be more than $length characters.',
