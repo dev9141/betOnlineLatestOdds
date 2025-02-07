@@ -50,6 +50,7 @@ class PubConfigurationEntity {
 class ConfigurationData {
 	String webviewUrl = "";
 	String includeUrl = "";
+	String affiliateUrl = "";
 	Style style = Style();
 	String? guestUser = "false";
 	List<String> elements = List.empty();
@@ -69,6 +70,7 @@ class ConfigurationData {
 	{
 		webviewUrl = json["WEBVIEW_URL_ODDS"];
 		includeUrl =  json["INCLUDE_URL_ODDS"];
+		affiliateUrl =  json["AFFILIATE_URL"];
 		style =  Style.fromJson(json["STYLE"]);
 		elements =  List<String>.from(json["ELEMENTS"].map((x) => x));
 		injectJsOnStart =  List<String>.from(json["INJECT_JS_ON_START"].map((x) => x));
@@ -87,6 +89,7 @@ class ConfigurationData {
 	Map<String, dynamic> toJson() => {
 		"WEBVIEW_URL_ODDS": webviewUrl,
 		"INCLUDE_URL_ODDS": includeUrl,
+		"AFFILIATE_URL": affiliateUrl,
 		"STYLE": style.toJson(),
 		"guest_user": guestUser??"false",
 		"ELEMENTS": List<dynamic>.from(elements.map((x) => x)),

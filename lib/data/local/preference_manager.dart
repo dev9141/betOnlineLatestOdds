@@ -33,6 +33,7 @@ class PreferenceManager {
   static const String _prefIntVersion = 'intVersion';
   static const String _prefIsGuestUser = 'isGuestUser';
   static const String _prefIsAllowGuestUser = 'isAllowGuestUser';
+  static const String _prefAffiliateUrl = 'affiliateUrl';
   static const String _prefSupport = 'support';
   static const String _prefPrivacyPolicy = 'pricacyPolicy';
   static const String _prefFaq = 'faq';
@@ -62,7 +63,6 @@ class PreferenceManager {
 
   static bool getIsAllowGuestUser() =>
       _sharedPreferences!.getBool(_prefIsAllowGuestUser) ?? false;
-
 
   static setAccessToken(String accessToken) async {
     await setSecureString(_prefAccessToken, accessToken);
@@ -97,6 +97,12 @@ class PreferenceManager {
   }
 
   static String getTnCUrl()  => _sharedPreferences!.getString(_prefTnC) ?? '';
+
+  static setAffiliateUrl(String affiliateUrl) async {
+    await _sharedPreferences!.setString(_prefAffiliateUrl, affiliateUrl);
+  }
+
+  static String getAffiliateUrl()  => _sharedPreferences!.getString(_prefAffiliateUrl) ?? '';
 
   static setIsLoginScreenOpen(bool isLoginScreenOpen) async {
     await _sharedPreferences!.setBool(_prefIsLoginScreenOpen, isLoginScreenOpen);

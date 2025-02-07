@@ -1021,6 +1021,7 @@ class S {
       args: [length],
     );
   }
+
   /// `Password must not be greater than {length} characters.`
   String err_password_max_length(Object length) {
     return Intl.message(

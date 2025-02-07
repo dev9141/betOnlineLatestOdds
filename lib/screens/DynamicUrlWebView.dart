@@ -1,3 +1,4 @@
+import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
 import 'package:bet_online_latest_odds/utils/helper/alert_helper.dart';
 import 'package:bet_online_latest_odds/utils/helper/app_url.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _DynamicUrlWebViewState extends State<DynamicUrlWebView> {
           onPageFinished: (url) {
             print("WebView: Page finished loading: $url");
             if (url.contains("https://api.betonline")) {
+              print("DynamicUrlWebView: second url 2");
               print("DynamicUrlWebView: Page finished loading: $url");
               if (!isFormUrlHandled && url.contains("/registrations?client_id")) {
                 print("DynamicUrlWebView: second url 2");
@@ -40,6 +42,9 @@ class _DynamicUrlWebViewState extends State<DynamicUrlWebView> {
               if (isFormUrlHandled && url.contains("registration?execution")) {
                 print("DynamicUrlWebView: second url 2");
                 AlertHelper.showToast("Registereted");
+                setState(() {
+                  //_isWebViewLoading = false;
+                });
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -51,7 +56,7 @@ class _DynamicUrlWebViewState extends State<DynamicUrlWebView> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(AppUrl.signUpWebViewUrl)); // Load the first URL
+      ..loadRequest(Uri.parse(PreferenceManager.getAffiliateUrl())); // Load the first URL
   }
 
   // Handle the form URL and autofill the data
@@ -89,7 +94,7 @@ class _DynamicUrlWebViewState extends State<DynamicUrlWebView> {
     jsBuffer.writeln('setTimeout(function () {');
     jsBuffer.writeln('document.getElementById("btnsubmit").disabled = false;');
     jsBuffer.writeln('document.getElementById("btnsubmit").click();');
-    jsBuffer.writeln('}, 2500);');
+    jsBuffer.writeln('}, 5000);');
     print("DynamicUrlWebView: inject ${jsBuffer.toString()}");
     return jsBuffer.toString();
   }

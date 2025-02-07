@@ -16,6 +16,8 @@ class AppStrings {
   static const String emptyFieldsError = 'Please enter both email and password';
   // static const String userName = 'User Name';
   static const String firstName = 'First Name';
+  static const String lastName = 'Last Name';
+  static const String dob = 'Date of birth';
 
   //Login field text
   static const String email = 'Email';
@@ -35,9 +37,13 @@ class AppStrings {
   //register
   static const String already_have_account = 'Already have an account?';
   static const String firstNameRequired = 'First name is required.';
+  static const String lastNameRequired = 'Last name is required.';
+  static const String dobRequired = 'Date of birth is required.';
   static const String phoneNumberRequired = 'Phone number is required.';
   static const String phoneNumberLength = 'Enter valid phone number.';
   static const String enter_first_name = 'Enter your first name';
+  static const String enter_last_name = 'Enter your last name';
+  static const String enter_dob = 'Select date of birth';
 
   static const String createAccount = 'Create Account';
 

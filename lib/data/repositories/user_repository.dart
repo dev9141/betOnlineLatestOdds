@@ -472,7 +472,9 @@ class UserRepository {
         "password": user.password,
         "device_name": Helper.getDeviceType(),
         "username": user.firstName,
-        // "first_name": user.firstName,
+        //"first_name": user.firstName,
+        //"last_name": user.lastName,
+        //"dob": user.dob,
         "phone": user.phoneNumber,
       },
     );
