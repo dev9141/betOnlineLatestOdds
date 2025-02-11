@@ -203,7 +203,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
     if (picked != null) {
       setState(() {
         _DOBController.text = dateFormat.format(picked);
-        DOBError = null
+        DOBError = null;
       });
     }
   }
@@ -661,6 +661,10 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                   'PasswordJ': _passwordController
                                                       .text.trim(),
                                                   'HomePhone': _phoneNumberController
+                                                      .text.trim(),
+                                                  'BirthDate': _DOBController
+                                                      .text.trim(),
+                                                  'LastName': _lastNameController
                                                       .text.trim(),
                                                 };
                                                 Navigator.pushReplacement(
