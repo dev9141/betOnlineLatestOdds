@@ -26,6 +26,7 @@ class AppUrl {
   static String deleteAccount = "${getAPIBaseURL()}auth/delete";
   static String loginAsGuest = "${getAPIBaseURL()}auth/guest";
   static String register = "${getAPIBaseURL()}auth/createBolUser";
+  static String registerConfirmation = "${getAPIBaseURL()}auth/bolrealplay";
   static String forgotPassword = "${getAPIBaseURL()}auth/forgot";
   static String logout = "${getAPIBaseURL()}auth/logout";
   static String resetPassword = "${getAPIBaseURL()}auth/reset";
@@ -36,6 +37,7 @@ class AppUrl {
 
   static const int successStatusCode = 200;
   static const int validationErrorStatusCode = 222;
+  static const int validationErrorStatusCode2 = 422;
   static const int parsingErrorStatusCode = 400;
   static const int unautharized = 401;
   static const int forceLogoutStatusCode = 403;

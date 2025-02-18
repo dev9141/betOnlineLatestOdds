@@ -472,9 +472,9 @@ class UserRepository {
         "password": user.password,
         "device_name": Helper.getDeviceType(),
         "username": user.firstName,
-        //"first_name": user.firstName,
-        //"last_name": user.lastName,
-        //"dob": user.dob,
+        "first_name": user.firstName,
+        "last_name": user.lastName,
+        "dob": user.dob,
         "phone": user.phoneNumber,
       },
     );
@@ -489,6 +489,86 @@ class UserRepository {
         setIsUserLoggedIn(true);
         return APIResponse(
             null, "Registration successfully done", true);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
+    }
+    else if (response.statusCode == AppUrl.parsingErrorStatusCode) {
+      String message = "";
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['errors'] != null) {
+        message = List.from(objJsonObject['errors'])
+            .map((element) => element['message'])
+            .join("\n");
+        return APIError(
+            response: null, status: response.statusCode, message: message);
+      }else if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
+    }
+    else if (response.statusCode == AppUrl.validationErrorStatusCode2) {
+      String message = "";
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        message = objJsonObject['message'];
+      }
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: message,
+            status: response.statusCode,
+            message: message);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
+    }
+    else {
+      return APIError(
+          response: null,
+          status: response.statusCode,
+          message: S.current.err_msg);
+    }
+  }
+
+  Future<Object> registerConfirmation(User user) async {
+    final String url = AppUrl.registerConfirmation;
+    var uri = Uri.parse(url);
+
+    var response = await http.Client().post(
+      uri,
+      headers: await Helper.getHeaders(hasToken: false),
+      body: {
+        "first_name": user.firstName,
+        "last_name": user.lastName,
+        "email": user.email,
+        "password": user.password,
+        "phone": user.phoneNumber,
+        "dob": user.dob,
+        "device_name": Helper.getDeviceType(),
+      },
+    );
+    logPrint("registerConfirmation  response ${response.statusCode} $url,  ${response.body}");
+    if (response.statusCode == AppUrl.successStatusCode) {
+      if (json.decode(response.body) != null) {
+        final objJsonObject = json.decode(response.body);
+        User user = User.fromMap(objJsonObject['user']);
+        String accessToken = objJsonObject['access_token'];
+        setAccessToken(accessToken);
+        setEmail(user.email);
+        setIsUserLoggedIn(true);
+        return APIResponse(
+            null, "Register Confirmation successfully done", true);
       } else {
         return APIError(
             response: null,

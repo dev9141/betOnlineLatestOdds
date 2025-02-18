@@ -334,10 +334,18 @@ class _AccountScreenState extends StateX<AccountScreen> {
 Widget _buildClickableItem(String title) {
   return InkWell(
     onTap: () {
+      String supportUrl = "";
       if (title == AppStrings.FAQ) {
+        supportUrl = PreferenceManager.getFAQUrl();
       } else if (title == AppStrings.support) {
+        supportUrl = PreferenceManager.getSupportUrl();
       } else if (title == AppStrings.privacy_policies) {
-      } else if (title == AppStrings.term_and_condition) {}
+        supportUrl = PreferenceManager.getPrivacyPolicyUrl();
+      } else if (title == AppStrings.term_and_condition) {
+        supportUrl = PreferenceManager.getTnCUrl();
+      }
+
+      Helper.openBrowser(supportUrl);
     },
     child: Container(
       alignment: Alignment.centerLeft,

@@ -20,6 +20,7 @@ import '../utils/helper/alert_helper.dart';
 import '../utils/helper/helper.dart';
 import '../views/custom_widgets/common_textfield.dart';
 import '../views/custom_widgets/primary_button.dart';
+import 'DynamicUrlWebView.dart';
 import 'forgot_password.dart';
 import 'home_screen.dart';
 
@@ -402,6 +403,25 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                         builder: (context) =>
                                             RegistrationScreen(), //RegistrationScreenTwo(),
                                       ));
+                                  /*Map<String, String> formData = {
+                                    'FirstName': "Dev",
+                                    'EMail': "deven0001@yopmail.com",
+                                    'PasswordJ': "Test@123",
+                                    'HomePhone': "6098545236",
+                                    'BirthDate': "01/01/1997",
+                                    'LastName': "Test",
+                                  };
+                                  PreferenceManager.setEmail(_emailController.text
+                                      .trim());
+                                  PreferenceManager.setPassword(_passwordController
+                                      .text.trim());
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DynamicUrlWebView(
+                                              formData: formData,),
+                                      ));*/
                                 },
                               )
                             ],

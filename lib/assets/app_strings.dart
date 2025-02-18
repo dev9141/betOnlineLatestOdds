@@ -9,6 +9,7 @@ class AppStrings {
   static const String sign_up = 'Sign Up';
   static const String needToLogin = 'Need to Login?';
   static const String loginButton = 'Login';
+  static const String nextButton = 'Next';
   static const String logoutButton = 'Logout';
   static const String log_in = 'Log In';
   static const String successMessage = 'Registered successfully!';

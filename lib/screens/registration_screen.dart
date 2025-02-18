@@ -222,113 +222,63 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          backgroundColor: AppColors.background,
-          body: Stack(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(AppAssets.imgBackgroundTexture),
-                        fit: BoxFit.cover)),
-                child: Center(
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Logo
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Image.asset(AppAssets.icLogo,
-                                  height: 40), // Placeholder for logo
-                            ),
-                            // Email & Password Fields
-                            Container(
-                              margin: const EdgeInsets.all(8.0),
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.all(16.0),
-                              decoration: BoxDecoration(
-                                color: AppColors.box_background,
-                                borderRadius: BorderRadius.circular(18),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: AppColors.background,
+            body: Stack(
+              children: [
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(AppAssets.imgBackgroundTexture),
+                          fit: BoxFit.cover)),
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        SingleChildScrollView(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Logo
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Image.asset(AppAssets.icLogo,
+                                    height: 40), // Placeholder for logo
                               ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    AppStrings.sign_up,
-                                    style: TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,),
-                                  ), const SizedBox(height: 6),
-                                  Container(
-                                    child: Text(
-                                      AppStrings.email,
-                                      textAlign: TextAlign.start,
+                              // Email & Password Fields
+                              Container(
+                                margin: const EdgeInsets.all(8.0),
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                  color: AppColors.box_background,
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      AppStrings.sign_up,
                                       style: TextStyle(
-                                        color: AppColors.textTitle,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  CommonTextField(
-                                    decoration: InputDecoration(
-                                      hintText: AppStrings.emailHint,
-                                      hintStyle: TextStyle(
-                                        color: AppColors.hintColor,
-                                      ),
-                                      filled: true,
-                                      fillColor: AppColors.white,
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16,
-                                        horizontal: 16,
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                    ),
-                                    commonController: _emailController,
-                                    textInputType: TextInputType.emailAddress,
-                                  ),
-                                  if (emailError != null)
+                                        color: AppColors.black,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,),
+                                    ), const SizedBox(height: 6),
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        top: 4,
+                                      child: Text(
+                                        AppStrings.email,
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          color: AppColors.textTitle,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        emailError ?? '',
-                                        style: AppTheme.errorTextTheme,
-                                      ),
                                     ),
-                                  const SizedBox(height: 6),
-                                  Container(
-                                    child: Text(
-                                      AppStrings.firstName,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        color: AppColors.textTitle,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Container(
-                                    height: 50,
-                                    child: CommonTextField(
-                                      commonController: _firstNameController,
-                                      textInputType: TextInputType.text,
-                                      hintText: AppStrings.enter_first_name,
+                                    const SizedBox(height: 4),
+                                    CommonTextField(
                                       decoration: InputDecoration(
-                                        hintText: 'Create a first name',
+                                        hintText: AppStrings.emailHint,
                                         hintStyle: TextStyle(
                                           color: AppColors.hintColor,
                                         ),
@@ -339,349 +289,373 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                           horizontal: 16,
                                         ),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),
+                                          borderRadius: BorderRadius.circular(8),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
+                                      commonController: _emailController,
+                                      textInputType: TextInputType.emailAddress,
                                     ),
-                                  ),
-                                  if (firstNameError != null)
+                                    if (emailError != null)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 4,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          emailError ?? '',
+                                          style: AppTheme.errorTextTheme,
+                                        ),
+                                      ),
+                                    const SizedBox(height: 6),
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        top: 4,
+                                      child: Text(
+                                        AppStrings.firstName,
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          color: AppColors.textTitle,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        firstNameError ?? '',
-                                        style: AppTheme.errorTextTheme,
-                                      ),
                                     ),
-                                  const SizedBox(height: 6),
-                                  Container(
-                                    child: Text(
-                                      AppStrings.lastName,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        color: AppColors.textTitle,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Container(
-                                    height: 50,
-                                    child: CommonTextField(
-                                      commonController: _lastNameController,
-                                      textInputType: TextInputType.text,
-                                      hintText: AppStrings.enter_last_name,
-                                      decoration: InputDecoration(
-                                        hintText: AppStrings.enter_last_name,
-                                        hintStyle: TextStyle(
-                                          color: AppColors.hintColor,
-                                        ),
-                                        filled: true,
-                                        fillColor: AppColors.white,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 16,
-                                          horizontal: 16,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  if (lastNameError != null)
+                                    const SizedBox(height: 4),
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        top: 4,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        lastNameError ?? '',
-                                        style: AppTheme.errorTextTheme,
-                                      ),
-                                    ),
-                                  const SizedBox(height: 6),
-                                  Container(
-                                    child: Text(
-                                      AppStrings.dob,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        color: AppColors.textTitle,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    height: 50,
-                                    child: CommonTextField(
-                                      commonController: _DOBController,
-                                      textInputType: TextInputType.none,
-                                      readOnly: true,
-                                      hintText: AppStrings.enter_dob,
-                                      decoration: InputDecoration(
-                                        hintText: AppStrings.enter_dob,
-                                        hintStyle: TextStyle(
-                                          color: AppColors.hintColor,
-                                        ),
-                                        filled: true,
-                                        fillColor: AppColors.white,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 16,
-                                          horizontal: 16,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      onTap: () => _selectDate(context),
-                                    ),
-                                  ),
-                                  if (DOBError != null)
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        top: 4,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        DOBError ?? '',
-                                        style: AppTheme.errorTextTheme,
-                                      ),
-                                    ),
-                                  SizedBox(height: 12),
-                                  Container(
-                                    child: Text(
-                                      AppStrings.password,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        color: AppColors.textTitle,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Container(
-                                    height: 50,
-                                    child: CommonTextField(
-                                      commonController: _passwordController,
-                                      textInputType: TextInputType.text,
-                                      hintText: AppStrings.passwordHint,
-                                      isShowPassword: _obscureText,
-                                      decoration: InputDecoration(
-                                        hintText: 'Create a password',
-                                        hintStyle: TextStyle(
-                                          color: AppColors.hintColor,
-                                        ),
-                                        filled: true,
-                                        fillColor: AppColors.white,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 16,
-                                          horizontal: 16,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _obscureText = !_obscureText;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _obscureText
-                                                ? Icons.visibility_rounded
-                                                : Icons.visibility_off_rounded,
+                                      height: 50,
+                                      child: CommonTextField(
+                                        commonController: _firstNameController,
+                                        textInputType: TextInputType.text,
+                                        hintText: AppStrings.enter_first_name,
+                                        decoration: InputDecoration(
+                                          hintText: 'Create a first name',
+                                          hintStyle: TextStyle(
                                             color: AppColors.hintColor,
-                                            size: 24,
+                                          ),
+                                          filled: true,
+                                          fillColor: AppColors.white,
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 16,
+                                            horizontal: 16,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8),
+                                            borderSide: BorderSide.none,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  if (passwordError != null)
+                                    if (firstNameError != null)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 4,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          firstNameError ?? '',
+                                          style: AppTheme.errorTextTheme,
+                                        ),
+                                      ),
+                                    const SizedBox(height: 6),
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        top: 4,
+                                      child: Text(
+                                        AppStrings.lastName,
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          color: AppColors.textTitle,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        passwordError ?? '',
-                                        style: AppTheme.errorTextTheme,
-                                      ),
                                     ),
-                                  SizedBox(height: 12),
-                                  Container(
-                                    child: Text(
-                                      AppStrings.phone_number,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        color: AppColors.textTitle,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Container(
-                                    height: 50,
-                                    child: CommonTextField(
-                                      commonController: _phoneNumberController,
-                                      textInputType: TextInputType.phone,
-                                      hintText: AppStrings.phone_hint,
-                                      decoration: InputDecoration(
-                                        hintText: AppStrings.phone_hint,
-                                        hintStyle: TextStyle(
-                                          color: AppColors.hintColor,
-                                        ),
-                                        filled: true,
-                                        fillColor: AppColors.white,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 16,
-                                          horizontal: 16,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  if (phoneNumberError != null)
+                                    const SizedBox(height: 4),
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        top: 4,
+                                      height: 50,
+                                      child: CommonTextField(
+                                        commonController: _lastNameController,
+                                        textInputType: TextInputType.text,
+                                        hintText: AppStrings.enter_last_name,
+                                        decoration: InputDecoration(
+                                          hintText: AppStrings.enter_last_name,
+                                          hintStyle: TextStyle(
+                                            color: AppColors.hintColor,
+                                          ),
+                                          filled: true,
+                                          fillColor: AppColors.white,
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 16,
+                                            horizontal: 16,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    if (lastNameError != null)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 4,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          lastNameError ?? '',
+                                          style: AppTheme.errorTextTheme,
+                                        ),
+                                      ),
+                                    const SizedBox(height: 6),
+                                    Container(
+                                      child: Text(
+                                        AppStrings.dob,
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          color: AppColors.textTitle,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        phoneNumberError ?? '',
-                                        style: AppTheme.errorTextTheme,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Container(
+                                      height: 50,
+                                      child: CommonTextField(
+                                        commonController: _DOBController,
+                                        textInputType: TextInputType.none,
+                                        readOnly: true,
+                                        hintText: AppStrings.enter_dob,
+                                        decoration: InputDecoration(
+                                          hintText: AppStrings.enter_dob,
+                                          hintStyle: TextStyle(
+                                            color: AppColors.hintColor,
+                                          ),
+                                          filled: true,
+                                          fillColor: AppColors.white,
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 16,
+                                            horizontal: 16,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                        onTap: () => _selectDate(context),
                                       ),
                                     ),
-                                  SizedBox(height: 4),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        focusColor: AppColors.red,
-                                        value: _termsAccepted,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _termsAccepted = value!;
-                                          });
-                                        },
+                                    if (DOBError != null)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 4,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          DOBError ?? '',
+                                          style: AppTheme.errorTextTheme,
+                                        ),
                                       ),
-                                      Expanded(
-                                        child: GestureDetector(
-                                          onTap: _launchTermsUrl,
-                                          child: const Text(
-                                            'I accept the Terms and Conditions',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: AppColors.red,
-                                              decoration: TextDecoration
-                                                  .underline,
+                                    SizedBox(height: 12),
+                                    Container(
+                                      child: Text(
+                                        AppStrings.password,
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          color: AppColors.textTitle,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Container(
+                                      height: 50,
+                                      child: CommonTextField(
+                                        commonController: _passwordController,
+                                        textInputType: TextInputType.text,
+                                        hintText: AppStrings.passwordHint,
+                                        isShowPassword: _obscureText,
+                                        decoration: InputDecoration(
+                                          hintText: 'Create a password',
+                                          hintStyle: TextStyle(
+                                            color: AppColors.hintColor,
+                                          ),
+                                          filled: true,
+                                          fillColor: AppColors.white,
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 16,
+                                            horizontal: 16,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _obscureText = !_obscureText;
+                                              });
+                                            },
+                                            child: Icon(
+                                              _obscureText
+                                                  ? Icons.visibility_rounded
+                                                  : Icons.visibility_off_rounded,
+                                              color: AppColors.hintColor,
+                                              size: 24,
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 12),
-                                  // Register Button
-                                  PrimaryButton(
-                                    btnColor: AppColors.red,
-                                    /*btnColor: isEnableBtn
-                                    ? AppColors.lightBlue
-                                    : AppColors.grayColor,*/
-                                    Text(AppStrings.createAccount,
+                                    ),
+                                    if (passwordError != null)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 4,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          passwordError ?? '',
+                                          style: AppTheme.errorTextTheme,
+                                        ),
+                                      ),
+                                    SizedBox(height: 12),
+                                    Container(
+                                      child: Text(
+                                        AppStrings.phone_number,
+                                        textAlign: TextAlign.start,
                                         style: TextStyle(
-                                            fontSize: 20,
-                                            color: AppColors.white)),
-                                        () {
-                                      Helper.hideKeyBoard(context);
-                                      checkValidation();
-                                      if (isValidation) {
-                                        Helper.isInternetConnectionAvailable()
-                                            .then((internet) async {
-                                          if (internet) {
+                                          color: AppColors.textTitle,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Container(
+                                      height: 50,
+                                      child: CommonTextField(
+                                        commonController: _phoneNumberController,
+                                        textInputType: TextInputType.phone,
+                                        hintText: AppStrings.phone_hint,
+                                        decoration: InputDecoration(
+                                          hintText: AppStrings.phone_hint,
+                                          hintStyle: TextStyle(
+                                            color: AppColors.hintColor,
+                                          ),
+                                          filled: true,
+                                          fillColor: AppColors.white,
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 16,
+                                            horizontal: 16,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    if (phoneNumberError != null)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 4,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          phoneNumberError ?? '',
+                                          style: AppTheme.errorTextTheme,
+                                        ),
+                                      ),
+                                    SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          focusColor: AppColors.red,
+                                          value: _termsAccepted,
+                                          onChanged: (value) {
                                             setState(() {
-                                              _isLoading = true;
-                                              userController.isApiCall = true;
+                                              _termsAccepted = value!;
                                             });
-                                            setData();
-                                            await userController
-                                                .register(user)
-                                                .then((value) async {
-                                              if (value is APIResponse) {
-                                                setState(() {
-                                                  _isLoading = false;
-                                                  userController.isApiCall =
-                                                  false;
-                                                });
-                                                AlertHelper.customSnackBar(
-                                                    context, value.message,
-                                                    false);
-                                                /*screenType = Screen.register;
-                                            Navigator.of(context)
-                                                .pushReplacementNamed(
-                                                Screen.emailVerification,
-                                                arguments: {
-                                                  'email': _emailController.text
-                                                      .toString()
-                                                      .trim()
-                                                });*/
-                                                //_startWebViewProcess();
-                                                Map<String, String> formData = {
-                                                  'FirstName': _firstNameController
-                                                      .text.trim(),
-                                                  'EMail': _emailController.text
-                                                      .trim(),
-                                                  'PasswordJ': _passwordController
-                                                      .text.trim(),
-                                                  'HomePhone': _phoneNumberController
-                                                      .text.trim(),
-                                                  'BirthDate': _DOBController
-                                                      .text.trim(),
-                                                  'LastName': _lastNameController
-                                                      .text.trim(),
-                                                };
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DynamicUrlWebView(
-                                                            formData: formData,),
-                                                    ));
-                                                /*Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeScreen(),
-                                                ));*/
-                                              } else {
-                                                if (value is APIError) {
+                                          },
+                                        ),
+                                        Expanded(
+                                          child: GestureDetector(
+                                            onTap: _launchTermsUrl,
+                                            child: const Text(
+                                              'I accept the Terms and Conditions',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: AppColors.red,
+                                                decoration: TextDecoration
+                                                    .underline,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 12),
+                                    // Register Button
+                                    PrimaryButton(
+                                      btnColor: AppColors.red,
+                                      /*btnColor: isEnableBtn
+                                      ? AppColors.lightBlue
+                                      : AppColors.grayColor,*/
+                                      Text(AppStrings.createAccount,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: AppColors.white)),
+                                          () {
+                                        Helper.hideKeyBoard(context);
+                                        checkValidation();
+                                        // Map<String, String> formData = {
+                                        //   'FirstName': _firstNameController.text.trim(),
+                                        //   'EMail': _emailController.text.trim(),
+                                        //   'PasswordJ': _passwordController.text.trim(),
+                                        //   'HomePhone': _phoneNumberController.text.trim(),
+                                        //   'BirthDate': _DOBController.text.trim(),
+                                        //   'LastName': _lastNameController.text.trim(),
+                                        // };
+                                        // isValidation = true;
+                                        // PreferenceManager.setEmail(_emailController.text
+                                        //     .trim());
+                                        // PreferenceManager.setPassword(_passwordController
+                                        //     .text.trim());
+                                        // /*Navigator.pushReplacement(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           DynamicUrlWebView(
+                                        //             formData: formData,),
+                                        //     ));*/
+                                        if (isValidation) {
+                                          Helper.isInternetConnectionAvailable()
+                                              .then((internet) async {
+                                            if (internet) {
+                                              setState(() {
+                                                _isLoading = true;
+                                                userController.isApiCall = true;
+                                              });
+                                              setData();
+                                              await userController
+                                                  .register(user)
+                                                  .then((value) async {
+                                                if (value is APIResponse) {
                                                   setState(() {
                                                     _isLoading = false;
                                                     userController.isApiCall =
@@ -689,93 +663,152 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                   });
                                                   AlertHelper.customSnackBar(
                                                       context, value.message,
-                                                      true);
+                                                      false);
+                                                  /*screenType = Screen.register;
+                                              Navigator.of(context)
+                                                  .pushReplacementNamed(
+                                                  Screen.emailVerification,
+                                                  arguments: {
+                                                    'email': _emailController.text
+                                                        .toString()
+                                                        .trim()
+                                                  });*/
+                                                  //_startWebViewProcess();
+                                                  //if(PreferenceManager.getOrganizationFlag()){
+                                                    Map<String, String> formData = {
+                                                      'FirstName': _firstNameController
+                                                          .text.trim(),
+                                                      'EMail': _emailController.text
+                                                          .trim(),
+                                                      'PasswordJ': _passwordController
+                                                          .text.trim(),
+                                                      'HomePhone': _phoneNumberController
+                                                          .text.trim(),
+                                                      'BirthDate': _DOBController
+                                                          .text.trim(),
+                                                      'LastName': _lastNameController
+                                                          .text.trim(),
+                                                    };
+                                                    Navigator.pushReplacement(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DynamicUrlWebView(
+                                                                formData: formData,),
+                                                        ));
+                                                  // }
+                                                  // else{
+                                                  //   Navigator.pushReplacement(
+                                                  //       context,
+                                                  //       MaterialPageRoute(
+                                                  //         builder: (context) =>
+                                                  //             HomeScreen(),
+                                                  //       ));
+                                                  // }
+                                                  //
+                                                  /*Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HomeScreen(),
+                                                  ));*/
+                                                } else {
+                                                  if (value is APIError) {
+                                                    setState(() {
+                                                      _isLoading = false;
+                                                      userController.isApiCall =
+                                                      false;
+                                                    });
+                                                    AlertHelper.customSnackBar(
+                                                        context, value.message,
+                                                        true);
+                                                  }
                                                 }
-                                              }
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _isLoading = false;
-                                              userController.isApiCall = false;
-                                            });
-                                            AlertHelper.customSnackBar(context,
-                                                S
-                                                    .of(context)
-                                                    .err_internet, true);
-                                          }
-                                        });
-                                      }
-                                    },
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50),
+                                              });
+                                            } else {
+                                              setState(() {
+                                                _isLoading = false;
+                                                userController.isApiCall = false;
+                                              });
+                                              AlertHelper.customSnackBar(context,
+                                                  S
+                                                      .of(context)
+                                                      .err_internet, true);
+                                            }
+                                          });
+                                        }
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      backgroundColor: AppColors.red,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 15),
+                              // Login Section
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      AppStrings.already_have_account,
+                                      style: TextStyle(
+                                          color: AppColors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    backgroundColor: AppColors.red,
-                                  )
-                                ],
+                                    SizedBox(height: 10),
+                                    GestureDetector(
+                                      child: Text(AppStrings.log_in,
+                                          style: TextStyle(
+                                              color: AppColors.theme_carrot,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800)),
+                                      onTap: () {
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen()),
+                                              (Route<dynamic> route) =>
+                                          false, // Removes all routes
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 15),
-                            // Login Section
-                            Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    AppStrings.already_have_account,
-                                    style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 10),
-                                  GestureDetector(
-                                    child: Text(AppStrings.log_in,
-                                        style: TextStyle(
-                                            color: AppColors.theme_carrot,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w800)),
-                                    onTap: () {
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()),
-                                            (Route<dynamic> route) =>
-                                        false, // Removes all routes
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              // Hidden WebView
-              Opacity(
-                opacity: 1,
-                child: SizedBox(
-                  height: 1,
-                  width: 1,
-                  child: _isWebViewInitialized
-                      ? WebViewWidget(controller: _webViewController)
-                      : null,
+                // Hidden WebView
+                Opacity(
+                  opacity: 1,
+                  child: SizedBox(
+                    height: 1,
+                    width: 1,
+                    child: _isWebViewInitialized
+                        ? WebViewWidget(controller: _webViewController)
+                        : null,
+                  ),
                 ),
-              ),
-              if (_isWebViewLoading)
-                const Opacity(
-                  opacity: 0.8,
-                  child: ModalBarrier(dismissible: false, color: Colors.black),
-                ),
-              if (_isWebViewLoading)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            ],
+                if (_isWebViewLoading)
+                  const Opacity(
+                    opacity: 0.8,
+                    child: ModalBarrier(dismissible: false, color: Colors.black),
+                  ),
+                if (_isWebViewLoading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              ],
+            ),
           ),
         ),
         if (_isLoading)

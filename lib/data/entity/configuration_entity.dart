@@ -53,6 +53,7 @@ class ConfigurationData {
 	String affiliateUrl = "";
 	Style style = Style();
 	String? guestUser = "false";
+	String? organizationFlag = "true";
 	List<String> elements = List.empty();
 	List<String> injectJsOnStart = List.empty();
 	List<String> injectJsOnProgress = List.empty();
@@ -80,6 +81,7 @@ class ConfigurationData {
 		injectJsOnEnd =  List<String>.from(json["INJECT_JS_ON_END"].map((x) => x));
 		injectJsOnNavigationStateChange =  List<String>.from(json["INJECT_JS_ON_NAVIGATION_STATE_CHANGE"].map((x) => x));
 		guestUser = json["guest_user"]??"false";
+		organizationFlag = json["organizationFlag"]??"true";
 		privacyPolicyUrl =  json["PRIVACY_POLICY"];
 		tncUrl =  json["TERM_CONDITIONS"];
 		supportUrl =  json["SUPPORT"];
@@ -92,6 +94,7 @@ class ConfigurationData {
 		"AFFILIATE_URL": affiliateUrl,
 		"STYLE": style.toJson(),
 		"guest_user": guestUser??"false",
+		"organizationFlag": organizationFlag??"true",
 		"ELEMENTS": List<dynamic>.from(elements.map((x) => x)),
 		"INJECT_JS_ON_START": List<dynamic>.from(injectJsOnStart.map((x) => x)),
 		"INJECT_JS_ON_PROGRESS": List<dynamic>.from(injectJsOnProgress.map((x) => x)),

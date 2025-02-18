@@ -33,6 +33,7 @@ class PreferenceManager {
   static const String _prefIntVersion = 'intVersion';
   static const String _prefIsGuestUser = 'isGuestUser';
   static const String _prefIsAllowGuestUser = 'isAllowGuestUser';
+  static const String _prefOrganizationFlag = 'organizationFlag';
   static const String _prefAffiliateUrl = 'affiliateUrl';
   static const String _prefSupport = 'support';
   static const String _prefPrivacyPolicy = 'pricacyPolicy';
@@ -63,6 +64,13 @@ class PreferenceManager {
 
   static bool getIsAllowGuestUser() =>
       _sharedPreferences!.getBool(_prefIsAllowGuestUser) ?? false;
+
+  static setOrganizationFlag(bool organizationFlag) async {
+    await _sharedPreferences!.setBool(_prefOrganizationFlag, organizationFlag);
+  }
+
+  static bool getOrganizationFlag() =>
+      _sharedPreferences!.getBool(_prefOrganizationFlag) ?? true;
 
   static setAccessToken(String accessToken) async {
     await setSecureString(_prefAccessToken, accessToken);

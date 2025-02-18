@@ -21,6 +21,9 @@ class UserController extends StateXController  {
   Future<Object> register(User user) async {
     return await userRepository.register(user);
   }
+  Future<Object> registerConfirmation(User user) async {
+    return await userRepository.registerConfirmation(user);
+  }
   Future<Object> login(User user) async {
     return await userRepository.login(user);
   }

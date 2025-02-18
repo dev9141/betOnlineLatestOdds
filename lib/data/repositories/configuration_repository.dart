@@ -156,6 +156,7 @@ class ConfigurationRepository {
         PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
         PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
         PreferenceManager.setIsAllowGuestUser(configurationEntity.data.guestUser!.toLowerCase() == "true");
+        PreferenceManager.setOrganizationFlag(configurationEntity.data.organizationFlag!.toLowerCase() == "true");
         PreferenceManager.setAffiliateUrl(configurationEntity.data.affiliateUrl);
 
         /*String accessToken = objJsonObject['access_token'];

@@ -1,6 +1,7 @@
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'assets/app_theme.dart';
@@ -10,7 +11,12 @@ import 'generated/l10n.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PreferenceManager.init();
-  runApp(const MyApp());
+  //runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // Allows only portrait mode
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 final navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends StatefulWidget {

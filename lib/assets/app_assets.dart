@@ -6,6 +6,7 @@ class AppAssets {
   static const String emailSend = "assets/images/email_send.png";
   static const String defaultProfileImage = "assets/images/default_profile_image.png";
   static const String flag_canada = "assets/images/flag_canada.svg";
+  static const String intro_video = "assets/video/bet_online_intro.mp4";
   /*static const String icBack = "assets/image/ic_back.svg";
 
   static const String icEdit  = "assets/image/ic_edit.png";
