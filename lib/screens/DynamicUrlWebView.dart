@@ -36,52 +36,61 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
   late UserController userController;
 
   User user = User();
+
   _DynamicUrlWebViewState() : super(controller: UserController()) {
     userController = controller as UserController;
   }
+
   @override
   void initState() {
     super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (url) {
-            print("DynamicUrlWebView: Page started loading: $url");
-          },
-          onPageFinished: (url) {
-            print("WebView: Page finished loading: $url");
-            if (url.contains("https://api.betonline")) {
-              print("DynamicUrlWebView: second url 2");
-              print("DynamicUrlWebView: Page finished loading: $url");
-              if (!isFormUrlHandled &&
-                  url.contains("/registrations?client_id")) {
+    print(
+        "getOrgRestrictionFlagged: ${PreferenceManager.getOrgRestrictionFlagged()}");
+    if (PreferenceManager.getOrgRestrictionFlagged()) {
+      // Load the first URL
+      _controller = WebViewController()
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onPageStarted: (url) {
+              print("DynamicUrlWebView: Page started loading: $url");
+            },
+            onPageFinished: (url) {
+              print("WebView: Page finished loading: $url");
+              if (url.contains("https://api.betonline")) {
                 print("DynamicUrlWebView: second url 2");
-                isFormUrlHandled = true;
-                _handleFormUrl();
-              }
-              if (isFormUrlHandled && url.contains("registration?execution")) {
-                //_callRegistrationConfirmApi();
-                print("DynamicUrlWebView: second url 2");
-                AlertHelper.showToast("Registereted");
-                setState(() {
-                  _isRegistered = true;
-                  //_isWebViewLoading = false;
-                });
-                /*Navigator.pushReplacement(
+                print("DynamicUrlWebView: Page finished loading: $url");
+                if (!isFormUrlHandled &&
+                    url.contains("/registrations?client_id")) {
+                  print("DynamicUrlWebView: second url 2");
+                  isFormUrlHandled = true;
+                  _handleFormUrl();
+                }
+                if (isFormUrlHandled &&
+                    url.contains("registration?execution")) {
+                  //_callRegistrationConfirmApi();
+                  print("DynamicUrlWebView: second url 2");
+                  AlertHelper.showToast("Registereted");
+                  setState(() {
+                    _isRegistered = true;
+                    //_isWebViewLoading = false;
+                  });
+                  if (_isVideoCompleted && _isRegistered) {
+                    _goToNextScreen();
+                  }
+                  /*Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomeScreen(),
                   ),
                 );*/
+                }
               }
-            }
-          },
-        ),
-      )
-      ..loadRequest(
-          Uri.parse(PreferenceManager.getAffiliateUrl())); // Load the first URL
-
+            },
+          ),
+        )
+        ..loadRequest(Uri.parse(PreferenceManager.getAffiliateUrl()));
+    }
 
     // Initialize video player
     _videoController = VideoPlayerController.asset(
@@ -93,13 +102,16 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       });
 
     _videoController.addListener(() {
-      if (_isVideoLoad && _videoController.value.position >= _videoController.value.duration - Duration(milliseconds: 200)) {
+      if (_isVideoLoad &&
+          _videoController.value.position >=
+              _videoController.value.duration - Duration(milliseconds: 200)) {
         if (!_isVideoCompleted) {
-          if (_isRegistered) { // Prevent multiple triggers
+          if (_isRegistered || !PreferenceManager.getOrgRestrictionFlagged()) {
+            // Prevent multiple triggers
+            setState(() {
+              _isVideoCompleted = true;
+            });
             _goToNextScreen();
-            // setState(() {
-            //   _isVideoCompleted = true;
-            // });
           }
         }
       }
@@ -116,8 +128,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              HomeScreen(),
+          builder: (context) => HomeScreen(),
         ));
   }
 
@@ -126,16 +137,18 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       if (internet) {
         setData();
         await userController.registerConfirmation(user).then((value) async {
-          //if (value is APIResponse) {
-            //_goToNextScreen();
-          // } else {
-          //   if (value is APIError) {
-          //     setState(() {
-          //       userController.isApiCall = false;
-          //     });
-          //     //AlertHelper.customSnackBar(context, value.message, true);
-          //   }
-          // }
+          if (value is APIResponse) {
+            setState(() {
+              _isRegistered = true;
+            });
+          } else {
+            if (value is APIError) {
+              setState(() {
+                userController.isApiCall = false;
+              });
+              //AlertHelper.customSnackBar(context, value.message, true);
+            }
+          }
         });
       } else {
         setState(() {
@@ -145,7 +158,6 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       }
     });
   }
-
 
   // Handle the form URL and autofill the data
   void _handleFormUrl() async {
@@ -196,7 +208,9 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
           SizedBox.shrink(
             child: IgnorePointer(
               ignoring: true, // Prevents user interaction
-              child: WebViewWidget(controller: _controller),
+              child: PreferenceManager.getOrgRestrictionFlagged()
+                  ? WebViewWidget(controller: _controller)
+                  : Container(),
             ),
           ),
           Center(
@@ -209,35 +223,36 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
           ),
 
           // Show "Next" button only when the video completes
-          if (_isVideoCompleted)
-            Positioned(
-              bottom: 50,
-              left: 0,
-              right: 0,
-              child: _isRegistered ? Center(
-                child: PrimaryButton(
-                  btnColor: AppColors.theme_carrot,
-                  /*btnColor: isEnableBtn
-                                    ? AppColors.lightBlue
-                                    : AppColors.grayColor,*/
-                  Text(AppStrings.nextButton,
-                      style: TextStyle(
-                          fontSize: 20, color: AppColors.white, fontWeight: FontWeight.bold)),
-                      () {
-                        _goToNextScreen();
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  backgroundColor: AppColors.theme_carrot,
-                ),
-              ) : Text("Loading..."),
-            ),
+          // if (_isVideoCompleted)
+          //   Positioned(
+          //     bottom: 50,
+          //     left: 0,
+          //     right: 0,
+          //     child: _isRegistered ? Center(
+          //       child: PrimaryButton(
+          //         btnColor: AppColors.theme_carrot,
+          //         /*btnColor: isEnableBtn
+          //                           ? AppColors.lightBlue
+          //                           : AppColors.grayColor,*/
+          //         Text(AppStrings.nextButton,
+          //             style: TextStyle(
+          //                 fontSize: 20, color: AppColors.white, fontWeight: FontWeight.bold)),
+          //             () {
+          //               _goToNextScreen();
+          //         },
+          //         shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(50),
+          //         ),
+          //         backgroundColor: AppColors.theme_carrot,
+          //       ),
+          //     ) : Text("Loading..."),
+          //   ),
         ],
       ),
       //WebViewWidget(controller: _controller), // Use WebViewWidget
     );
   }
+
   void setData() {
     setState(() {
       user.email = widget.formData['EMail']!;
@@ -249,4 +264,3 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
     });
   }
 }
-

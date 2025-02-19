@@ -23,8 +23,10 @@ import '../../utils/constants/define.dart';
 import '../../utils/constants/screen.dart';
 import '../../utils/helper/alert_helper.dart';
 import '../../utils/helper/helper.dart';
+import '../controller/ConfigurationController.dart';
 import '../assets/app_strings.dart';
 import '../assets/app_theme.dart';
+import '../data/entity/configuration_entity.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -41,6 +43,8 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _DOBController = TextEditingController();
+  late ConfigurationController _configurationController;
+  ConfigurationEntity? _configurationEntity;
 
   bool _obscureText = true;
   String? emailError;
@@ -60,12 +64,12 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   bool _isWebViewInitialized = false;
   bool isFormUrlHandled = false;
   final DateFormat dateFormat = DateFormat(
-      'MM/dd/yyyy'); // Change format as needed
+      'dd-MM-yyyy'); // Change format as needed
 
-  _RegistrationScreenState() : super(controller: UserController()) {
-    // Acquire a reference to the passed Controller.
-    userController = controller as UserController;
-  }
+  _RegistrationScreenState()
+      : userController = UserController(),
+        _configurationController = ConfigurationController(),
+        super(controller: UserController()); // Keep the intended controller
 
   Future<void> _launchTermsUrl() async {
     final Uri url = Uri.parse(PreferenceManager.getTnCUrl());
@@ -664,6 +668,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                   AlertHelper.customSnackBar(
                                                       context, value.message,
                                                       false);
+                                                  _fetchConfigurationData();
                                                   /*screenType = Screen.register;
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
@@ -675,27 +680,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                   });*/
                                                   //_startWebViewProcess();
                                                   //if(PreferenceManager.getOrganizationFlag()){
-                                                    Map<String, String> formData = {
-                                                      'FirstName': _firstNameController
-                                                          .text.trim(),
-                                                      'EMail': _emailController.text
-                                                          .trim(),
-                                                      'PasswordJ': _passwordController
-                                                          .text.trim(),
-                                                      'HomePhone': _phoneNumberController
-                                                          .text.trim(),
-                                                      'BirthDate': _DOBController
-                                                          .text.trim(),
-                                                      'LastName': _lastNameController
-                                                          .text.trim(),
-                                                    };
-                                                    Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              DynamicUrlWebView(
-                                                                formData: formData,),
-                                                        ));
                                                   // }
                                                   // else{
                                                   //   Navigator.pushReplacement(
@@ -984,4 +968,58 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
       user.phoneNumber = _phoneNumberController.text.toString().trim();
     });
   }
+
+  Future<void> _fetchConfigurationData() async {
+    setState(() {
+      _isLoading = true; // Show loader when the API call starts
+    });
+    try {
+      _configurationController.configuration().then((value) async {
+        if (value is APIResponse) {
+          setState(() {
+            _configurationController.isApiCall = false;
+          });
+          _configurationEntity = value.object as ConfigurationEntity?;
+          Map<String, String> formData = {
+            'FirstName': _firstNameController
+                .text.trim(),
+            'EMail': _emailController.text
+                .trim(),
+            'PasswordJ': _passwordController
+                .text.trim(),
+            'HomePhone': _phoneNumberController
+                .text.trim(),
+            'BirthDate': _DOBController
+                .text.trim(),
+            'LastName': _lastNameController
+                .text.trim(),
+          };
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    DynamicUrlWebView(
+                      formData: formData,),
+              ));
+          //_configurationEntity!.data.webviewUrl = "https://www.bet_online_latest_odds.com.pa/nba/";
+          print("Config Response: ${_configurationEntity!.data.toJson()}");
+        } else {
+          if (value is APIError) {
+            setState(() {
+              _isLoading = false;
+              _configurationController.isApiCall = false;
+            });
+            AlertHelper.customSnackBar(
+                context, value.message, true);
+          }
+        }
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false; // Hide loader in case of error
+      });
+      print(e);
+    }
+  }
+
 }

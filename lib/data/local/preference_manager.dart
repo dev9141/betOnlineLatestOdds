@@ -40,6 +40,7 @@ class PreferenceManager {
   static const String _prefFaq = 'faq';
   static const String _prefTnC = 'tnc';
   static const String _prefIsLoginScreenOpen = 'isLoginScreenOpen';
+  static const String _prefOrgRestrictionFlagged = 'orgRestrictionFlagged';
 
 
   static setIsUserLoggedIn(bool loggedIn) async {
@@ -65,8 +66,8 @@ class PreferenceManager {
   static bool getIsAllowGuestUser() =>
       _sharedPreferences!.getBool(_prefIsAllowGuestUser) ?? false;
 
-  static setOrganizationFlag(bool organizationFlag) async {
-    await _sharedPreferences!.setBool(_prefOrganizationFlag, organizationFlag);
+  static setOrganizationFlag(bool organizationFlag) {
+    _sharedPreferences!.setBool(_prefOrganizationFlag, organizationFlag);
   }
 
   static bool getOrganizationFlag() =>
@@ -117,6 +118,12 @@ class PreferenceManager {
   }
 
   static bool getIsLoginScreenOpen()  => _sharedPreferences!.getBool(_prefIsLoginScreenOpen) ?? false;
+
+  static setOrgRestrictionFlagged(bool orgRestrictionFlagged) async {
+    await _sharedPreferences!.setBool(_prefOrgRestrictionFlagged, orgRestrictionFlagged);
+  }
+
+  static bool getOrgRestrictionFlagged()  => _sharedPreferences!.getBool(_prefOrgRestrictionFlagged) ?? false;
 
 
   static setFAQUrl(String faqUrl) async {

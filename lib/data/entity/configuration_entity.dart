@@ -3,20 +3,24 @@ import 'dart:ffi';
 
 class ConfigurationEntity {
 	late ConfigurationData data;
+	late bool orgRestrictionFlagged = false;
 	late List<Promotion> promotions;
 
 	ConfigurationEntity({
 		required this.data,
+		required this.orgRestrictionFlagged,
 		required this.promotions,
 	});
 
 	factory ConfigurationEntity.fromJson(Map<String, dynamic> json) => ConfigurationEntity(
 		data: ConfigurationData.fromJson(json["data"]),
+		orgRestrictionFlagged: json['org_restriction_flagged'] as bool,
 		promotions: List<Promotion>.from(json["promotions"].map((x) => Promotion.fromJson(x))),
 	);
 
 	Map<String, dynamic> toJson() => {
 		"data": data.toJson(),
+		"org_restriction_flagged": orgRestrictionFlagged,
 		"promotions": List<dynamic>.from(promotions.map((x) => x.toJson())),
 	};
 

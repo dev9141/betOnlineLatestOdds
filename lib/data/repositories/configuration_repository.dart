@@ -77,6 +77,7 @@ class ConfigurationRepository {
         final objJsonObject = json.decode(response.body);
         ConfigurationEntity configurationEntity = ConfigurationEntity.fromJson(objJsonObject);
         PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.privacyPolicyUrl);
+        PreferenceManager.setOrgRestrictionFlagged(configurationEntity.orgRestrictionFlagged);
         PreferenceManager.setSupportUrl(configurationEntity.data.supportUrl);
         PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
         PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
