@@ -28,8 +28,8 @@ const LAST_NAME_LENGTH_MIN = 2;
 const PHONE_NUMBER_LENGTH = 10;
 
 
-const dateFormat = "dd-MM-yyyy";
-const birthDateFormat = "dd-MM-yyyy";
+const dateFormat = "MM-DD-YYYY";
+const birthDateFormat = "MM/DD/YYYY";
 const birthDateSampleFormat = "dd MMM, yyyy";
 
 

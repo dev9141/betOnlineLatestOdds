@@ -60,7 +60,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   bool _isWebViewInitialized = false;
   bool isFormUrlHandled = false;
   final DateFormat dateFormat = DateFormat(
-      'dd-MM-yyyy'); // Change format as needed
+      'MM/dd/yyyy'); // Change format as needed
 
   _RegistrationScreenState() : super(controller: UserController()) {
     // Acquire a reference to the passed Controller.

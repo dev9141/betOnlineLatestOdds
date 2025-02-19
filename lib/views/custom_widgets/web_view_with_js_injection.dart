@@ -24,6 +24,7 @@ class _WebViewWithJsInjectionState extends StateX<WebViewWithJsInjection> {
   late WebViewController _controller;
   Map<String, List<String>> _jsScripts = {};
   bool _canGoBack = false;
+  bool _isScriptLoaded = false;
 
   @override
   void initState() {
@@ -73,6 +74,7 @@ class _WebViewWithJsInjectionState extends StateX<WebViewWithJsInjection> {
             }
           },
           onPageFinished: (String url) async {
+            _isScriptLoaded = true;
             if (_jsScripts.containsKey('LOAD')) {
               await _injectJavaScriptList(_jsScripts['LOAD']!);
             }
@@ -88,12 +90,17 @@ class _WebViewWithJsInjectionState extends StateX<WebViewWithJsInjection> {
               return NavigationDecision.navigate;
             }
             else {
-              // Open in external browser
-              if (await canLaunchUrl(Uri.parse(request.url))) {
-                await launchUrl(Uri.parse(request.url), mode: LaunchMode.externalApplication);
-              }
-              else{
-                await launchUrl(Uri.parse(request.url), mode: LaunchMode.externalApplication);
+              if (_isScriptLoaded) {
+                // Open in external browser
+                if (await canLaunchUrl(Uri.parse(request.url)
+                )) {
+                  await launchUrl(Uri.parse(request.url),
+                      mode: LaunchMode.externalApplication);
+                }
+                else {
+                  await launchUrl(Uri.parse(request.url),
+                      mode: LaunchMode.externalApplication);
+                }
               }
               return NavigationDecision.prevent;
             }

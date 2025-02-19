@@ -169,6 +169,7 @@ class UserRepository {
           message: S.current.err_msg);
     }
   }
+
   Future<Object> loginGuest(User user) async {
     final device = await getDevice();
     print("Device: $device");
@@ -185,7 +186,7 @@ class UserRepository {
       },
     );
     logPrint(
-        "LOGIN  Response:  ${response.statusCode} & Response Body  = ${response.body}");
+        "loginGuest  Response:  ${response.statusCode} & Response Body  = ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);
@@ -262,7 +263,7 @@ class UserRepository {
       },
     );
     logPrint(
-        "LOGIN  Response:  ${response.statusCode} & Response Body  = ${response.body}");
+        "resetPassword  Response:  ${response.statusCode} & Response Body  = ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         return APIResponse(
@@ -329,7 +330,7 @@ class UserRepository {
       },
     );
     logPrint(
-        "LOGIN  Response:  ${response.statusCode} & Response Body  = ${response.body}");
+        "deleteAccount  Response:  ${response.statusCode} & Response Body  = ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
         return APIResponse(
             null, "Account delete Successfully...", true);
@@ -391,7 +392,7 @@ class UserRepository {
       },
     );
     logPrint(
-        "LOGIN  Response:  ${response.statusCode} & Response Body  = ${response.body}");
+        "loginAsGuest  Response:  ${response.statusCode} & Response Body  = ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);

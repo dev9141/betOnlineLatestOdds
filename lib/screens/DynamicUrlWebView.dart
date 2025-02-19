@@ -32,6 +32,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
   bool isFormUrlHandled = false; // Ensure form is handled only once
   bool _isVideoCompleted = false;
   bool _isVideoLoad = false;
+  bool _isRegistered = false;
   late UserController userController;
 
   User user = User();
@@ -64,6 +65,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                 print("DynamicUrlWebView: second url 2");
                 AlertHelper.showToast("Registereted");
                 setState(() {
+                  _isRegistered = true;
                   //_isWebViewLoading = false;
                 });
                 /*Navigator.pushReplacement(
@@ -80,6 +82,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       ..loadRequest(
           Uri.parse(PreferenceManager.getAffiliateUrl())); // Load the first URL
 
+
     // Initialize video player
     _videoController = VideoPlayerController.asset(
       AppAssets.intro_video, // Replace with your video URL
@@ -91,10 +94,13 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
 
     _videoController.addListener(() {
       if (_isVideoLoad && _videoController.value.position >= _videoController.value.duration - Duration(milliseconds: 200)) {
-        if (!_isVideoCompleted) {  // Prevent multiple triggers
-          setState(() {
-            _isVideoCompleted = true;
-          });
+        if (!_isVideoCompleted) {
+          if (_isRegistered) { // Prevent multiple triggers
+            _goToNextScreen();
+            // setState(() {
+            //   _isVideoCompleted = true;
+            // });
+          }
         }
       }
     });
@@ -186,6 +192,13 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
     return Scaffold(
       body: Stack(
         children: [
+          // Hidden WebView (Running in background using Opacity)
+          SizedBox.shrink(
+            child: IgnorePointer(
+              ignoring: true, // Prevents user interaction
+              child: WebViewWidget(controller: _controller),
+            ),
+          ),
           Center(
             child: _videoController.value.isInitialized
                 ? AspectRatio(
@@ -195,26 +208,13 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                 : CircularProgressIndicator(), // Show loading until video initializes
           ),
 
-          // Hidden WebView (Running in background using Opacity)
-          IgnorePointer(
-            ignoring: true,
-            child: Opacity(
-              opacity: 0.0, // Fully transparent but still active
-              child: SizedBox(
-                width: double.infinity,
-                height: double.infinity,
-                child: WebViewWidget(controller: _controller),
-              ),
-            ),
-          ),
-
           // Show "Next" button only when the video completes
           if (_isVideoCompleted)
             Positioned(
               bottom: 50,
               left: 0,
               right: 0,
-              child: Center(
+              child: _isRegistered ? Center(
                 child: PrimaryButton(
                   btnColor: AppColors.theme_carrot,
                   /*btnColor: isEnableBtn
@@ -231,7 +231,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   ),
                   backgroundColor: AppColors.theme_carrot,
                 ),
-              ),
+              ) : Text("Loading..."),
             ),
         ],
       ),
