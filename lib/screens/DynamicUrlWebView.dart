@@ -68,22 +68,12 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                 }
                 if (isFormUrlHandled &&
                     url.contains("registration?execution")) {
-                  //_callRegistrationConfirmApi();
-                  print("DynamicUrlWebView: second url 2");
+                  _callRegistrationConfirmApi();
+                  print("DynamicUrlWebView: Final url 2");
                   AlertHelper.showToast("Registereted");
-                  setState(() {
-                    _isRegistered = true;
-                    //_isWebViewLoading = false;
-                  });
-                  if (_isVideoCompleted && _isRegistered) {
-                    _goToNextScreen();
-                  }
-                  /*Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ),
-                );*/
+                  // setState(() {
+                  //   _isRegistered = true;
+                  // });
                 }
               }
             },

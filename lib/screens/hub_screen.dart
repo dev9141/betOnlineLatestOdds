@@ -52,7 +52,7 @@ class _HubScreenState extends StateX<HubScreen> {
         } else {
           if (value is APIError) {
             setState(() {
-              _isLoading = false;
+              // _isLoading = false;
               _configurationController.isApiCall = false;
             });
             AlertHelper.customSnackBar(
