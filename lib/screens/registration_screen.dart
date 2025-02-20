@@ -64,7 +64,7 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
   bool _isWebViewInitialized = false;
   bool isFormUrlHandled = false;
   final DateFormat dateFormat = DateFormat(
-      'dd-MM-yyyy'); // Change format as needed
+      'MM/dd/yyyy'); // Change format as needed
 
   _RegistrationScreenState()
       : userController = UserController(),
@@ -989,10 +989,10 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                 .text.trim(),
             'HomePhone': _phoneNumberController
                 .text.trim(),
-            'BirthDate': _DOBController
-                .text.trim(),
-            'LastName': _lastNameController
-                .text.trim(),
+            // 'BirthDate': _DOBController
+            //     .text.trim(),
+            // 'LastName': _lastNameController
+            //     .text.trim(),
           };
           Navigator.pushReplacement(
               context,

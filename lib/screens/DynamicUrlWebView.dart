@@ -71,9 +71,9 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   _callRegistrationConfirmApi();
                   print("DynamicUrlWebView: Final url 2");
                   AlertHelper.showToast("Registereted");
-                  // setState(() {
-                  //   _isRegistered = true;
-                  // });
+                  setState(() {
+                    _isRegistered = true;
+                  });
                 }
               }
             },
@@ -248,8 +248,8 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       user.email = widget.formData['EMail']!;
       user.password = widget.formData['PasswordJ']!;
       user.firstName = widget.formData['FirstName']!;
-      user.lastName = widget.formData['LastName']!;
-      user.dob = widget.formData['BirthDate']!;
+      // user.lastName = widget.formData['LastName']!;
+      // user.dob = widget.formData['BirthDate']!;
       user.phoneNumber = widget.formData['HomePhone']!;
     });
   }
