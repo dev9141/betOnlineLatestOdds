@@ -1,4 +1,4 @@
-package com.bet_online_latest_odds
+package com.betOnline.odds
 
 import io.flutter.embedding.android.FlutterActivity
 

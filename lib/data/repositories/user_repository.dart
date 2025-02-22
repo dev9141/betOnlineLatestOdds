@@ -64,8 +64,8 @@ class UserRepository {
   }
 
 
-  setPassword(String email) {
-    PreferenceManager.setPassword(email);
+  setPassword(String password) {
+    PreferenceManager.setPassword(password);
   }
 
   setPhoneNumber(String phoneNumber) {
@@ -622,6 +622,42 @@ class UserRepository {
           message: S.current.err_msg);
     }
   }
+  Future<Object> sendTokenToServer() async {
+    final String url = AppUrl.setFirebaseDeviceToken;
+    var uri = Uri.parse(url);
+
+    var response = await http.Client().post(
+      uri,
+      headers: await Helper.getHeaders(hasToken: true),
+      body: {
+        "device_token": PreferenceManager.getDeviceToken()
+      },
+    );
+    logPrint("sendTokenToServer  response ${response.statusCode} $url,  ${response.body}");
+    if (response.statusCode == AppUrl.successStatusCode) {
+      if (json.decode(response.body) != null) {
+        final objJsonObject = json.decode(response.body);
+        User user = User.fromMap(objJsonObject['user']);
+        String accessToken = objJsonObject['access_token'];
+        setAccessToken(accessToken);
+        setEmail(user.email);
+        setIsUserLoggedIn(true);
+        return APIResponse(
+            null, "", true);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
+    }
+    else {
+      return APIError(
+          response: null,
+          status: response.statusCode,
+          message: S.current.err_msg);
+    }
+  }
   Future<Object> verifyEmail(String email) async {
     final String url = AppUrl.verifyEmail;
     var uri = Uri.parse(url);
@@ -840,8 +876,17 @@ class UserRepository {
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
           String deviceTokenLogin = await getDeviceToken();
+          /*String email = await getEmail();
+          String password = PreferenceManager.getPassword();
+          String accessToken = await PreferenceManager.getAccessToken();
+          bool isUserLoggedIn = getIsUserLoggedIn();*/
           PreferenceManager.clear();
           setDeviceToken(deviceTokenLogin);
+          /*setEmail(email);
+          setPassword(password);
+          setAccessToken(accessToken);
+          setIsUserLoggedIn(isUserLoggedIn);*/
+
           return APIResponse(
               null, "", true);
       } else {

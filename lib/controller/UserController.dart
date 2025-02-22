@@ -45,4 +45,7 @@ class UserController extends StateXController  {
   Future<Object> verifyEmail(String email) async {
     return await userRepository.verifyEmail(email);
   }
+  Future<Object> sendTokenToServer() async {
+    return await userRepository.sendTokenToServer();
+  }
 }

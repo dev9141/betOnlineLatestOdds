@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bet_online_latest_odds/data/local/preference_manager.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +9,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../data/repositories/user_repository.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../main.dart';
 import 'app_url.dart';
 import 'enumeration.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
+
+import 'log.dart';
 
 
 class Helper {
@@ -182,6 +186,16 @@ class Helper {
   static bool isDarkMode(){
     print("isDarkTheme 123 ${isDarkTheme.value}");
     return isDarkTheme.value;
+  }
+
+  static showBuildVersion() async {
+    await PackageInfo.fromPlatform().then((PackageInfo packageInfo) async {
+      PreferenceManager.setExtVersion(packageInfo.buildNumber);
+      PreferenceManager.setIntVersion(packageInfo.version);
+      PreferenceManager.setPackageName(packageInfo.packageName);
+    }).onError((error, stackTrace) {
+      logPrint("ERROR_VERSION: ${error.toString()}");
+    });
   }
 }
 

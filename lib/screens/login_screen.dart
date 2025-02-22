@@ -146,9 +146,10 @@ class _LoginScreenState extends StateX<LoginScreen> {
                               Text(
                                 AppStrings.log_in,
                                 style: TextStyle(
-                                    color: AppColors.black,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,),
+                                  color: AppColors.black,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               SizedBox(height: 20),
                               Container(
@@ -301,71 +302,11 @@ class _LoginScreenState extends StateX<LoginScreen> {
                                     : AppColors.grayColor,*/
                                 Text(AppStrings.loginButton,
                                     style: TextStyle(
-                                        fontSize: 20, color: AppColors.white, fontWeight: FontWeight.bold)),
+                                        fontSize: 20,
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.bold)),
                                 () {
-                                  Helper.hideKeyBoard(context);
-                                  checkValidation();
-                                  if (isValidation) {
-                                    setState(() {
-                                      userController.isApiCall = true;
-                                    });
-                                    Helper.isInternetConnectionAvailable()
-                                        .then((internet) async {
-                                      if (internet) {
-                                        setState(() {
-                                          _isLoading =
-                                              true; // Show loader when the API call starts
-                                        });
-                                        setData();
-                                        await userController
-                                            .login(user)
-                                            .then((value) async {
-                                          if (value is APIResponse) {
-                                            setState(() {
-                                              _isLoading = false;
-                                              userController.isApiCall = false;
-                                            });
-                                            PreferenceManager
-                                                .setIsLoginScreenOpen(true);
-                                            AlertHelper.customSnackBar(
-                                                context, value.message, false);
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeScreen(),
-                                                ));
-                                            /*screenType = Screen.register;
-                                            Navigator.of(context)
-                                                .pushReplacementNamed(
-                                                    Screen.emailVerification,
-                                                    arguments: {
-                                                  'email': _emailController.text
-                                                      .toString()
-                                                      .trim()
-                                                });*/
-                                          } else {
-                                            if (value is APIError) {
-                                              setState(() {
-                                                _isLoading = false;
-                                                userController.isApiCall =
-                                                    false;
-                                              });
-                                              AlertHelper.customSnackBar(
-                                                  context, value.message, true);
-                                            }
-                                          }
-                                        });
-                                      } else {
-                                        setState(() {
-                                          _isLoading = false;
-                                          userController.isApiCall = false;
-                                        });
-                                        AlertHelper.customSnackBar(context,
-                                            S.of(context).err_internet, true);
-                                      }
-                                    });
-                                  }
+                                  callLoginAPI();
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
@@ -503,6 +444,96 @@ class _LoginScreenState extends StateX<LoginScreen> {
           ),
       ],
     );
+  }
+
+  callLoginAPI(){
+    Helper.hideKeyBoard(context);
+    checkValidation();
+    if (isValidation) {
+      setState(() {
+        userController.isApiCall = true;
+      });
+      Helper.isInternetConnectionAvailable()
+          .then((internet) async {
+        if (internet) {
+          setState(() {
+            _isLoading =
+            true; // Show loader when the API call starts
+          });
+          setData();
+          await userController
+              .login(user)
+              .then((value) async {
+            if (value is APIResponse) {
+              sendDeviceToken();
+            } else {
+              if (value is APIError) {
+                setState(() {
+                  _isLoading = false;
+                  userController.isApiCall =
+                  false;
+                });
+                AlertHelper.customSnackBar(
+                    context, value.message, true);
+              }
+            }
+          });
+        } else {
+          setState(() {
+            _isLoading = false;
+            userController.isApiCall = false;
+          });
+          AlertHelper.customSnackBar(context,
+              S.of(context).err_internet, true);
+        }
+      });
+    }
+  }
+
+  sendDeviceToken() async {
+    await userController
+        .sendTokenToServer()
+        .then((value) async {
+      if (value is APIResponse) {
+        setState(() {
+          _isLoading = false;
+          userController.isApiCall =
+          false;
+        });
+        PreferenceManager
+            .setIsLoginScreenOpen(true);
+        AlertHelper.customSnackBar(
+            context,
+            value.message,
+            false);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(),
+            ));
+        /*screenType = Screen.register;
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    Screen.emailVerification,
+                                                    arguments: {
+                                                  'email': _emailController.text
+                                                      .toString()
+                                                      .trim()
+                                                });*/
+      }
+      else {
+        if (value is APIError) {
+          setState(() {
+            _isLoading = false;
+            userController.isApiCall =
+            false;
+          });
+          AlertHelper.customSnackBar(
+              context, value.message, true);
+        }
+      }
+    });
   }
 
   checkValidation() {

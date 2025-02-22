@@ -206,4 +206,6 @@ class PreferenceManager {
 
     //await _sharedPreferences.clear();
   }
+
+
 }

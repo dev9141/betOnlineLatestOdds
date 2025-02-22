@@ -24,8 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () async {
       // Replace with your logic to check if user is logged in
-      bool isLoggedIn = false; // Change this based on actual login state
-      PreferenceManager.setIsUserLoggedIn(false);
+
       if (PreferenceManager.getIsUserLoggedIn()) {
         Navigator.pushReplacement(
             context,

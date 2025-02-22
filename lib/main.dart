@@ -1,17 +1,60 @@
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'assets/app_theme.dart';
 import 'data/local/preference_manager.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'generated/l10n.dart';
 
+import 'package:timezone/data/latest.dart' as tz;
+
+import 'utils/helper/helper.dart';
+import 'utils/helper/notification_helper.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  tz.initializeTimeZones();
   await PreferenceManager.init();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+
   //runApp(const MyApp());
+
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+// Disabling Crashlytics in development mode.
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+  // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@drawable/img_notification');
+  const DarwinInitializationSettings initializationSettingsIOS =
+  DarwinInitializationSettings(
+    /*onDidReceiveLocalNotification: onDidReceiveLocalNotification*/);
+
+  const InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+      macOS: initializationSettingsIOS);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Allows only portrait mode
   ]).then((_) {
@@ -28,6 +71,15 @@ class MyApp extends StatefulWidget {
 ValueNotifier<bool> isDarkTheme = ValueNotifier<bool>(false);
 
 class _MyAppState extends State<MyApp> {
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  @override
+  void initState() {
+    Helper.showBuildVersion();
+    _checkNotificationPermission();
+    NotificationHelper.configureFirebase();
+
+    super.initState();
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -54,6 +106,34 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
+  _checkNotificationPermission() async {
+    // check permission
+    firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    PermissionStatus status = await Permission.notification.status;
+
+    if (status.isGranted) {
+      // Get FCM Token
+      if(PreferenceManager.getDeviceToken() == null || PreferenceManager.getDeviceToken() == "") {
+        NotificationHelper.getToken();
+      }
+    } else {
+      PermissionStatus status = await Permission.notification.request();
+      if (status.isGranted) {
+        // Get FCM Token
+        NotificationHelper.getToken();
+      }
+    }
+  }
+
 }
 
 Widget setHome() {

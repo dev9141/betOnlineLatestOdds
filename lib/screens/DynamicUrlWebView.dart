@@ -33,6 +33,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
   bool _isVideoCompleted = false;
   bool _isVideoLoad = false;
   bool _isRegistered = false;
+  bool _showAfterVideoLoader = false;
   late UserController userController;
 
   User user = User();
@@ -72,7 +73,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   print("DynamicUrlWebView: Final url 2");
                   AlertHelper.showToast("Registereted");
                   setState(() {
-                    _isRegistered = true;
+                    //_isRegistered = true;
                   });
                 }
               }
@@ -104,9 +105,59 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
             _goToNextScreen();
           }
         }
+        if(_isVideoCompleted && !_isRegistered){
+          setState(() {
+            _showAfterVideoLoader = true;
+          });
+        }
       }
     });
   }
+
+  sendDeviceToken() async {
+    await userController
+        .sendTokenToServer()
+        .then((value) async {
+      if (value is APIResponse) {
+        setState(() {
+          userController.isApiCall =
+          false;
+        });
+        PreferenceManager
+            .setIsLoginScreenOpen(true);
+        AlertHelper.customSnackBar(
+            context,
+            value.message,
+            false);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(),
+            ));
+        /*screenType = Screen.register;
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    Screen.emailVerification,
+                                                    arguments: {
+                                                  'email': _emailController.text
+                                                      .toString()
+                                                      .trim()
+                                                });*/
+      }
+      else {
+        if (value is APIError) {
+          setState(() {
+            userController.isApiCall =
+            false;
+          });
+          AlertHelper.customSnackBar(
+              context, value.message, true);
+        }
+      }
+    });
+  }
+
 
   @override
   void dispose() {
@@ -129,8 +180,11 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
         await userController.registerConfirmation(user).then((value) async {
           if (value is APIResponse) {
             setState(() {
-              _isRegistered = true;
+              //_isRegistered = true;
             });
+            if(_isVideoCompleted && _isRegistered){
+              _goToNextScreen();
+            }
           } else {
             if (value is APIError) {
               setState(() {
@@ -211,6 +265,10 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   )
                 : CircularProgressIndicator(), // Show loading until video initializes
           ),
+          Opacity(
+            opacity: _showAfterVideoLoader ? 0 : 1,
+            child: CircularProgressIndicator(),
+          )
 
           // Show "Next" button only when the video completes
           // if (_isVideoCompleted)
