@@ -81,10 +81,10 @@ class PreferenceManager {
 
 
   static setDeviceToken(String deviceToken) async {
-    await setSecureString(_prefDeviceToken, deviceToken);
+    await _sharedPreferences!.setString(_prefDeviceToken, deviceToken);
   }
 
-  static Future<String> getDeviceToken() async => await getSecureString(_prefDeviceToken) ?? '';
+  static String getDeviceToken() => _sharedPreferences!.getString(_prefDeviceToken) ?? '';
 
 
   static setSupportUrl(String supportUrl) async {

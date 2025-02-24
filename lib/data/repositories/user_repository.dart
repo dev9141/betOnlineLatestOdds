@@ -51,8 +51,8 @@ class UserRepository {
     return PreferenceManager.getIsGuestUser();
   }
 
-  Future<String> getDeviceToken() async {
-    return await PreferenceManager.getDeviceToken();
+  String getDeviceToken() {
+    return PreferenceManager.getDeviceToken();
   }
 
   setDeviceToken(String deviceToken) {
