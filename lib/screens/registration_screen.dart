@@ -989,10 +989,10 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                 .text.trim(),
             'HomePhone': _phoneNumberController
                 .text.trim(),
-            // 'BirthDate': _DOBController
-            //     .text.trim(),
-            // 'LastName': _lastNameController
-            //     .text.trim(),
+            'BirthDate': _DOBController
+                .text.trim(),
+            'LastName': _lastNameController
+                .text.trim(),
           };
           Navigator.pushReplacement(
               context,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "176244618435",
+    "project_id": "betonline-odds",
+    "storage_bucket": "betonline-odds.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176244618435:android:a69f5b4da0de4a6153de76",
+        "android_client_info": {
+          "package_name": "com.betOnline.odds"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHQRhuggCiCOqyOUVOTYCc1oQQu-uV5R8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

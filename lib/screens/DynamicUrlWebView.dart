@@ -228,12 +228,12 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       jsBuffer.writeln(
         'document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
       );
-      /*jsBuffer.writeln(
+      jsBuffer.writeln(
         'document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
       );
       jsBuffer.writeln(
         'document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
-      );*/
+      );
     });
     jsBuffer.writeln('setTimeout(function () {');
     jsBuffer.writeln('document.getElementById("btnsubmit").disabled = false;');
@@ -306,8 +306,8 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
       user.email = widget.formData['EMail']!;
       user.password = widget.formData['PasswordJ']!;
       user.firstName = widget.formData['FirstName']!;
-      // user.lastName = widget.formData['LastName']!;
-      // user.dob = widget.formData['BirthDate']!;
+      user.lastName = widget.formData['LastName']!;
+      user.dob = widget.formData['BirthDate']!;
       user.phoneNumber = widget.formData['HomePhone']!;
     });
   }
