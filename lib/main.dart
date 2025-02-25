@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,36 +14,59 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'assets/app_theme.dart';
 import 'data/local/preference_manager.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'firebase_options.dart';
 import 'generated/l10n.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'utils/helper/helper.dart';
 import 'utils/helper/notification_helper.dart';
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
+
+Future<void> checkPermission() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    print('User granted provisional permission');
+  } else {
+    print('User declined or has not accepted permission');
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
   tz.initializeTimeZones();
   await PreferenceManager.init();
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  //runApp(const MyApp());
+  // Request permission
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
-
-// Disabling Crashlytics in development mode.
-  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+  print('User granted permission: ${settings.authorizationStatus}');
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
@@ -55,12 +83,38 @@ Future<void> main() async {
       macOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
+  if (Platform.isAndroid) {
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var sdkInt = androidInfo.version.sdkInt;
+    if (sdkInt! > 31) {
+      checkPermission();
+    }
+  } else if (Platform.isIOS) {
+    checkPermission();
+  }
+
+  await _initApp().then((value) {
+    runApp(MyApp());
+  });
+
+  /*
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Allows only portrait mode
   ]).then((_) {
     runApp(MyApp());
-  });
+  });*/
 }
+
+Future _initApp() async {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // Allows only portrait mode
+  ]);
+  WidgetsFlutterBinding.ensureInitialized();
+  Helper.showBuildVersion();
+  NotificationHelper.configureFirebase();
+  NotificationHelper.getToken();
+}
+
 final navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -71,13 +125,8 @@ class MyApp extends StatefulWidget {
 ValueNotifier<bool> isDarkTheme = ValueNotifier<bool>(false);
 
 class _MyAppState extends State<MyApp> {
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   @override
   void initState() {
-    Helper.showBuildVersion();
-    _checkNotificationPermission();
-    NotificationHelper.configureFirebase();
-
     super.initState();
   }
   // This widget is the root of your application.
@@ -106,34 +155,6 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
-  _checkNotificationPermission() async {
-    // check permission
-    firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    PermissionStatus status = await Permission.notification.status;
-
-    if (status.isGranted) {
-      // Get FCM Token
-      if(PreferenceManager.getDeviceToken() == null || PreferenceManager.getDeviceToken() == "") {
-        NotificationHelper.getToken();
-      }
-    } else {
-      PermissionStatus status = await Permission.notification.request();
-      if (status.isGranted) {
-        // Get FCM Token
-        NotificationHelper.getToken();
-      }
-    }
-  }
-
 }
 
 Widget setHome() {

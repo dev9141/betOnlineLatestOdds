@@ -163,10 +163,16 @@ class UserRepository {
       }
     }
     else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -241,10 +247,16 @@ class UserRepository {
             message: S.current.err_msg);
       }
     } else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -311,10 +323,16 @@ class UserRepository {
             message: S.current.err_msg);
       }
     } else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
   Future<Object> deleteAccount(String password) async {
@@ -372,10 +390,16 @@ class UserRepository {
             message: S.current.err_msg);
       }
     } else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -450,10 +474,16 @@ class UserRepository {
       }
     }
     else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -535,10 +565,16 @@ class UserRepository {
       }
     }
     else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -562,12 +598,6 @@ class UserRepository {
     logPrint("registerConfirmation  response ${response.statusCode} $url,  ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
-        final objJsonObject = json.decode(response.body);
-        User user = User.fromMap(objJsonObject['user']);
-        String accessToken = objJsonObject['access_token'];
-        setAccessToken(accessToken);
-        setEmail(user.email);
-        setIsUserLoggedIn(true);
         return APIResponse(
             null, "Register Confirmation successfully done", true);
       } else {
@@ -616,10 +646,16 @@ class UserRepository {
       }
     }
     else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
   Future<Object> sendTokenToServer() async {
@@ -636,11 +672,6 @@ class UserRepository {
     logPrint("sendTokenToServer  response ${response.statusCode} $url,  ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
-        final objJsonObject = json.decode(response.body);
-        User user = User.fromMap(objJsonObject['user']);
-        String accessToken = objJsonObject['access_token'];
-        setAccessToken(accessToken);
-        setEmail(user.email);
         setIsUserLoggedIn(true);
         return APIResponse(
             null, "", true);
@@ -652,10 +683,16 @@ class UserRepository {
       }
     }
     else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
   Future<Object> verifyEmail(String email) async {
@@ -726,10 +763,16 @@ class UserRepository {
       }
     }
     else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -859,10 +902,16 @@ class UserRepository {
             message: S.current.err_msg);
       }
     } else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 
@@ -920,10 +969,16 @@ class UserRepository {
           status: response.statusCode,
           message: S.current.err_msg);
     } else {
-      return APIError(
-          response: null,
-          status: response.statusCode,
-          message: S.current.err_msg);
+      final objJsonObject = json.decode(response.body);
+      if (objJsonObject['message'] != null) {
+        return APIError(
+            response: null, status: response.statusCode, message: objJsonObject['message']);
+      } else {
+        return APIError(
+            response: null,
+            status: response.statusCode,
+            message: S.current.err_msg);
+      }
     }
   }
 

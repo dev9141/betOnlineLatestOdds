@@ -71,7 +71,7 @@ class ConfigurationRepository {
       headers: await Helper.getHeaders(hasToken: true),
     );
     logPrint(
-        "configuration  Response:  ${response.statusCode} & Response Body  = ${response.body}");
+        "configuration  headers: ${response.headers} Response:  ${response.statusCode} & Response Body  = ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);

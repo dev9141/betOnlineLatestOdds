@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
+import FirebaseCore
 import FirebaseMessaging
-
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,7 +10,9 @@ import FirebaseMessaging
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
       GeneratedPluginRegistrant.register(with: self)
-
+      UNUserNotificationCenter.current().delegate = self
+      application.registerForRemoteNotifications()
+      
       let controller = window?.rootViewController as! FlutterViewController
       let channel = FlutterMethodChannel(name: "my_flutter_app/channel",
                                          binaryMessenger: controller.binaryMessenger)
@@ -35,18 +37,13 @@ import FirebaseMessaging
 
       return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-      print("Firebase registration token: \(String(describing: fcmToken))")
+}
 
-      let dataDict: [String: String] = ["token": fcmToken ?? ""]
-      NotificationCenter.default.post(
-        name: Notification.Name("FCMToken"),
-        object: nil,
-        userInfo: dataDict
-      )
-      // TODO: If necessary send token to application server.
-      // Note: This callback is fired at each app startup and whenever a new token is generated.
+extension AppDelegate: MessagingDelegate {
+    override func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print(deviceToken)
+        Messaging.messaging().apnsToken = deviceToken
     }
 }
 
