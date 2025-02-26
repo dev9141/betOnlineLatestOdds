@@ -71,10 +71,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                     url.contains("registration?execution")) {
                   _callRegistrationConfirmApi();
                   print("DynamicUrlWebView: Final url 2");
-                  AlertHelper.showToast("Registereted");
-                  setState(() {
-                    //_isRegistered = true;
-                  });
+                  // AlertHelper.showToast("Registereted");
                 }
               }
             },
@@ -129,10 +126,10 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
         });
         PreferenceManager
             .setIsLoginScreenOpen(true);
-        AlertHelper.customSnackBar(
-            context,
-            value.message,
-            false);
+        // AlertHelper.customSnackBar(
+        //     context,
+        //     value.message,
+        //     false);
         _goToNextScreen();
       }
       else {
@@ -262,13 +259,13 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   )
                 : CircularProgressIndicator(), // Show loading until video initializes
           ),
-/*
+
           IgnorePointer(
             ignoring: true, // Prevents user interaction
             child: isSignupEnable
                 ? WebViewWidget(controller: _controller)
                 : Container(),
-          ),*/
+          ),
 
           // Show "Next" button only when the video completes
           // if (_isVideoCompleted)

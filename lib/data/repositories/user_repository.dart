@@ -582,23 +582,12 @@ class UserRepository {
     String url = AppUrl.registerConfirmation;
     var uri = Uri.parse(url);
 
-    print("user details");
-    print(user.firstName);
-    print(user.lastName);
-    print(user.email);
-    print(user.password);
-    print(user.phoneNumber);
-    print(user.dob);
-    print("-------------");
-
 
     var response = await http.Client().post(
       uri,
       headers: await Helper.getHeaders(hasToken: true),
-      body: {
-        "UserID": user.id,
-      },
     );
+
     logPrint("registerConfirmation  response ${response.statusCode} $url,  ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
         return APIResponse(

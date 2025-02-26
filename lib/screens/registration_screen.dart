@@ -645,9 +645,9 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                     userController.isApiCall =
                                                     false;
                                                   });
-                                                  AlertHelper.customSnackBar(
-                                                      context, value.message,
-                                                      false);
+                                                  // AlertHelper.customSnackBar(
+                                                  //     context, value.message,
+                                                  //     false);
                                                   _fetchConfigurationData();
                                                 } else {
                                                   if (value is APIError) {
