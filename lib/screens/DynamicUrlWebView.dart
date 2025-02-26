@@ -46,8 +46,8 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
   void initState() {
     super.initState();
     print(
-        "getOrgRestrictionFlagged: ${PreferenceManager.getOrgRestrictionFlagged()}");
-    if (PreferenceManager.getOrgRestrictionFlagged()) {
+        "getOrgRestrictionFlagged: ${PreferenceManager.getRestrictSignupFlagged()}");
+    if (PreferenceManager.getRestrictSignupFlagged() == "False") {
       // Load the first URL
       _controller = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -97,7 +97,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
           _videoController.value.position >=
               _videoController.value.duration - Duration(milliseconds: 200)) {
         if (!_isVideoCompleted) {
-          if (_isRegistered || !PreferenceManager.getOrgRestrictionFlagged()) {
+          if (_isRegistered || PreferenceManager.getRestrictSignupFlagged() == "True") {
             // Prevent multiple triggers
             setState(() {
               _isVideoCompleted = true;
@@ -252,7 +252,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
           SizedBox.shrink(
             child: IgnorePointer(
               ignoring: true, // Prevents user interaction
-              child: PreferenceManager.getOrgRestrictionFlagged()
+              child: PreferenceManager.getRestrictSignupFlagged() == "False"
                   ? WebViewWidget(controller: _controller)
                   : Container(),
             ),

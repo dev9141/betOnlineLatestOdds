@@ -78,6 +78,7 @@ class ConfigurationRepository {
         ConfigurationEntity configurationEntity = ConfigurationEntity.fromJson(objJsonObject);
         PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.privacyPolicyUrl);
         PreferenceManager.setOrgRestrictionFlagged(configurationEntity.orgRestrictionFlagged);
+        PreferenceManager.setRestrictSignupFlagged(configurationEntity.data.restrict_signup == null ? "True" : configurationEntity.data.restrict_signup!);
         PreferenceManager.setSupportUrl(configurationEntity.data.supportUrl);
         PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
         PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
@@ -154,6 +155,7 @@ class ConfigurationRepository {
         PubConfigurationEntity configurationEntity = PubConfigurationEntity.fromJson(objJsonObject);
         PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.privacyPolicyUrl);
         PreferenceManager.setSupportUrl(configurationEntity.data.supportUrl);
+        PreferenceManager.setRestrictSignupFlagged(configurationEntity.data.restrict_signup == null ? "True" : configurationEntity.data.restrict_signup!);
         PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
         PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
         PreferenceManager.setIsAllowGuestUser(configurationEntity.data.guestUser!.toLowerCase() == "true");

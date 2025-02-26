@@ -124,6 +124,11 @@ class PreferenceManager {
   }
 
   static bool getOrgRestrictionFlagged()  => _sharedPreferences!.getBool(_prefOrgRestrictionFlagged) ?? false;
+  static setRestrictSignupFlagged(String orgRestrictionFlagged) async {
+    await _sharedPreferences!.setString(_prefOrgRestrictionFlagged, orgRestrictionFlagged);
+  }
+
+  static String getRestrictSignupFlagged()  => _sharedPreferences!.getString(_prefOrgRestrictionFlagged) ?? "True";
 
 
   static setFAQUrl(String faqUrl) async {
