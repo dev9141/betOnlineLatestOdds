@@ -627,26 +627,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                           () {
                                         Helper.hideKeyBoard(context);
                                         checkValidation();
-                                        // Map<String, String> formData = {
-                                        //   'FirstName': _firstNameController.text.trim(),
-                                        //   'EMail': _emailController.text.trim(),
-                                        //   'PasswordJ': _passwordController.text.trim(),
-                                        //   'HomePhone': _phoneNumberController.text.trim(),
-                                        //   'BirthDate': _DOBController.text.trim(),
-                                        //   'LastName': _lastNameController.text.trim(),
-                                        // };
-                                        // isValidation = true;
-                                        // PreferenceManager.setEmail(_emailController.text
-                                        //     .trim());
-                                        // PreferenceManager.setPassword(_passwordController
-                                        //     .text.trim());
-                                        // /*Navigator.pushReplacement(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //       builder: (context) =>
-                                        //           DynamicUrlWebView(
-                                        //             formData: formData,),
-                                        //     ));*/
                                         if (isValidation) {
                                           Helper.isInternetConnectionAvailable()
                                               .then((internet) async {
@@ -669,33 +649,6 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                       context, value.message,
                                                       false);
                                                   _fetchConfigurationData();
-                                                  /*screenType = Screen.register;
-                                              Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                  Screen.emailVerification,
-                                                  arguments: {
-                                                    'email': _emailController.text
-                                                        .toString()
-                                                        .trim()
-                                                  });*/
-                                                  //_startWebViewProcess();
-                                                  //if(PreferenceManager.getOrganizationFlag()){
-                                                  // }
-                                                  // else{
-                                                  //   Navigator.pushReplacement(
-                                                  //       context,
-                                                  //       MaterialPageRoute(
-                                                  //         builder: (context) =>
-                                                  //             HomeScreen(),
-                                                  //       ));
-                                                  // }
-                                                  //
-                                                  /*Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeScreen(),
-                                                  ));*/
                                                 } else {
                                                   if (value is APIError) {
                                                     setState(() {

@@ -502,7 +502,7 @@ class UserRepository {
         "email": user.email,
         "password": user.password,
         "device_name": Helper.getDeviceType(),
-        "username": user.firstName,
+        "username": user.email,
         "first_name": user.firstName,
         "last_name": user.lastName,
         "dob": user.dob,
@@ -579,33 +579,30 @@ class UserRepository {
   }
 
   Future<Object> registerConfirmation(User user) async {
-    final String url = AppUrl.registerConfirmation;
+    String url = AppUrl.registerConfirmation;
     var uri = Uri.parse(url);
+
+    print("user details");
+    print(user.firstName);
+    print(user.lastName);
+    print(user.email);
+    print(user.password);
+    print(user.phoneNumber);
+    print(user.dob);
+    print("-------------");
+
 
     var response = await http.Client().post(
       uri,
-      headers: await Helper.getHeaders(hasToken: false),
+      headers: await Helper.getHeaders(hasToken: true),
       body: {
-        "first_name": user.firstName,
-        "last_name": user.lastName,
-        "email": user.email,
-        "password": user.password,
-        "phone": user.phoneNumber,
-        "dob": user.dob,
-        "device_name": Helper.getDeviceType(),
+        "UserID": user.id,
       },
     );
     logPrint("registerConfirmation  response ${response.statusCode} $url,  ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
-      if (json.decode(response.body) != null) {
         return APIResponse(
             null, "Register Confirmation successfully done", true);
-      } else {
-        return APIError(
-            response: null,
-            status: response.statusCode,
-            message: S.current.err_msg);
-      }
     }
     else if (response.statusCode == AppUrl.parsingErrorStatusCode) {
       String message = "";
@@ -706,15 +703,10 @@ class UserRepository {
         "email": email
       },*/
     );
-    logPrint("signup  response ${response.statusCode} $url ${response.body}");
+    logPrint("verifyEmail  response ${response.statusCode} $url ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);
-       /* User user = User.fromMap(objJsonObject['user']);
-        String accessToken = objJsonObject['access_token'];
-        setAccessToken(accessToken);
-        setEmail(user.email);
-        setIsUserLoggedIn(true);*/
         return APIResponse(
             null, "Link for email verification send on your email address", true);
       } else {
@@ -925,17 +917,8 @@ class UserRepository {
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
           String deviceTokenLogin = await getDeviceToken();
-          /*String email = await getEmail();
-          String password = PreferenceManager.getPassword();
-          String accessToken = await PreferenceManager.getAccessToken();
-          bool isUserLoggedIn = getIsUserLoggedIn();*/
           PreferenceManager.clear();
           setDeviceToken(deviceTokenLogin);
-          /*setEmail(email);
-          setPassword(password);
-          setAccessToken(accessToken);
-          setIsUserLoggedIn(isUserLoggedIn);*/
-
           return APIResponse(
               null, "", true);
       } else {

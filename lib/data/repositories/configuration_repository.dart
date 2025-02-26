@@ -66,27 +66,25 @@ class ConfigurationRepository {
     final String url = AppUrl.configuration;
     var uri = Uri.parse(url);
 
+    logPrint("configuration ");
+    print(await Helper.getHeaders(hasToken: true));
     var response = await http.Client().get(
       uri,
       headers: await Helper.getHeaders(hasToken: true),
     );
     logPrint(
-        "configuration  headers: ${response.headers} Response:  ${response.statusCode} & Response Body  = ${response.body}");
+        "configuration Response:  ${response.statusCode} & Response Body  = ${response.body}");
     if (response.statusCode == AppUrl.successStatusCode) {
       if (json.decode(response.body) != null) {
         final objJsonObject = json.decode(response.body);
         ConfigurationEntity configurationEntity = ConfigurationEntity.fromJson(objJsonObject);
         PreferenceManager.setPrivacyPolicyUrl(configurationEntity.data.privacyPolicyUrl);
         PreferenceManager.setOrgRestrictionFlagged(configurationEntity.orgRestrictionFlagged);
-        PreferenceManager.setRestrictSignupFlagged(configurationEntity.data.restrict_signup == null ? "True" : configurationEntity.data.restrict_signup!);
+        bool result = configurationEntity.data.restrict_signup.toString().toLowerCase() == "true";
+        PreferenceManager.setRestrictSignupFlag(result);
         PreferenceManager.setSupportUrl(configurationEntity.data.supportUrl);
         PreferenceManager.setFAQUrl(configurationEntity.data.faqUrl);
         PreferenceManager.setTnCUrl(configurationEntity.data.tncUrl);
-        /*String accessToken = objJsonObject['access_token'];
-        setEmail(user.email);
-        setAccessToken(accessToken);
-        setEmail(user.email);
-        setIsUserLoggedIn(true);*/
         return APIResponse(
             null, "Configuration Successfully...", true, configurationEntity);
       } else {
@@ -162,11 +160,6 @@ class ConfigurationRepository {
         PreferenceManager.setOrganizationFlag(configurationEntity.data.organizationFlag!.toLowerCase() == "true");
         PreferenceManager.setAffiliateUrl(configurationEntity.data.affiliateUrl);
 
-        /*String accessToken = objJsonObject['access_token'];
-        setEmail(user.email);
-        setAccessToken(accessToken);
-        setEmail(user.email);
-        setIsUserLoggedIn(true);*/
         return APIResponse(
             null, "Configuration Successfully...", true, configurationEntity);
       } else {

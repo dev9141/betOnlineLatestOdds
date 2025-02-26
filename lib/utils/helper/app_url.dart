@@ -26,7 +26,7 @@ class AppUrl {
   static String deleteAccount = "${getAPIBaseURL()}auth/delete";
   static String loginAsGuest = "${getAPIBaseURL()}auth/guest";
   static String register = "${getAPIBaseURL()}auth/createBolUser";
-  static String registerConfirmation = "${getAPIBaseURL()}bolrealplay";
+  static String registerConfirmation = "${getAPIBaseURL()}auth/bolrealplay";
   static String setFirebaseDeviceToken = "${getAPIBaseURL()}set_firebase_token";
   static String forgotPassword = "${getAPIBaseURL()}auth/forgot";
   static String logout = "${getAPIBaseURL()}auth/logout";

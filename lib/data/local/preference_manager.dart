@@ -41,6 +41,7 @@ class PreferenceManager {
   static const String _prefTnC = 'tnc';
   static const String _prefIsLoginScreenOpen = 'isLoginScreenOpen';
   static const String _prefOrgRestrictionFlagged = 'orgRestrictionFlagged';
+  static const String _prefRestrictSignup = 'restrict_signup';
 
 
   static setIsUserLoggedIn(bool loggedIn) async {
@@ -74,11 +75,10 @@ class PreferenceManager {
       _sharedPreferences!.getBool(_prefOrganizationFlag) ?? true;
 
   static setAccessToken(String accessToken) async {
-    await setSecureString(_prefAccessToken, accessToken);
+    await _sharedPreferences!.setString(_prefAccessToken, accessToken);
   }
 
-  static Future<String> getAccessToken() async => await getSecureString(_prefAccessToken) ?? '';
-
+  static String getAccessToken() => _sharedPreferences!.getString(_prefAccessToken) ?? '';
 
   static setDeviceToken(String deviceToken) async {
     await _sharedPreferences!.setString(_prefDeviceToken, deviceToken);
@@ -130,6 +130,11 @@ class PreferenceManager {
 
   static String getRestrictSignupFlagged()  => _sharedPreferences!.getString(_prefOrgRestrictionFlagged) ?? "True";
 
+  static setRestrictSignupFlag(bool restrictSignup) async {
+    await _sharedPreferences!.setBool(_prefRestrictSignup, restrictSignup);
+  }
+
+  static bool getRestrictSignupFlag()  => _sharedPreferences!.getBool(_prefRestrictSignup) ?? false;
 
   static setFAQUrl(String faqUrl) async {
     await _sharedPreferences!.setString(_prefFaq, faqUrl);

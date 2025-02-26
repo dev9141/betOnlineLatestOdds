@@ -33,8 +33,8 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
   bool _isVideoCompleted = false;
   bool _isVideoLoad = false;
   bool _isRegistered = false;
-  bool _showAfterVideoLoader = false;
   late UserController userController;
+  bool isSignupEnable = false;
 
   User user = User();
 
@@ -45,9 +45,9 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
   @override
   void initState() {
     super.initState();
-    print(
-        "getOrgRestrictionFlagged: ${PreferenceManager.getRestrictSignupFlagged()}");
-    if (PreferenceManager.getRestrictSignupFlagged() == "False") {
+    isSignupEnable = PreferenceManager.getRestrictSignupFlag();
+    print("isSignupEnable: ${isSignupEnable}");
+    if (!isSignupEnable) {
       // Load the first URL
       _controller = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -91,27 +91,31 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
         _videoController.play(); // Auto play video
         _isVideoLoad = true;
       });
+    _videoController.addListener(videoListener);
+  }
 
-    _videoController.addListener(() {
-      if (_isVideoLoad &&
-          _videoController.value.position >=
-              _videoController.value.duration - Duration(milliseconds: 200)) {
-        if (!_isVideoCompleted) {
-          if (_isRegistered || PreferenceManager.getRestrictSignupFlagged() == "True") {
-            // Prevent multiple triggers
-            setState(() {
-              _isVideoCompleted = true;
-            });
-            _goToNextScreen();
-          }
+  videoListener() {
+    if (_isVideoLoad &&
+        _videoController.value.position >=
+            _videoController.value.duration - Duration(milliseconds: 200)) {
+      if (!_isVideoCompleted) {
+        setState(() {
+          _isVideoCompleted = true;
+        });
+        if (isSignupEnable) {
+          _videoController.removeListener(videoListener);
+          sendDeviceToken();
+        } else if (_isRegistered) {
+          _videoController.removeListener(videoListener);
+          sendDeviceToken();
         }
-        if(_isVideoCompleted && !_isRegistered){
-          setState(() {
-            _showAfterVideoLoader = true;
-          });
+      } else {
+        if (_isRegistered) {
+          _videoController.removeListener(videoListener);
+          sendDeviceToken();
         }
       }
-    });
+    }
   }
 
   sendDeviceToken() async {
@@ -129,21 +133,7 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
             context,
             value.message,
             false);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  HomeScreen(),
-            ));
-        /*screenType = Screen.register;
-                                            Navigator.of(context)
-                                                .pushReplacementNamed(
-                                                    Screen.emailVerification,
-                                                    arguments: {
-                                                  'email': _emailController.text
-                                                      .toString()
-                                                      .trim()
-                                                });*/
+        _goToNextScreen();
       }
       else {
         if (value is APIError) {
@@ -180,11 +170,11 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
         await userController.registerConfirmation(user).then((value) async {
           if (value is APIResponse) {
             setState(() {
-              //_isRegistered = true;
+              _isRegistered = true;
             });
-            if(_isVideoCompleted && _isRegistered){
-              _goToNextScreen();
-            }
+            // if(_isVideoCompleted && _isRegistered){
+            //   _goToNextScreen();
+            // }
           } else {
             if (value is APIError) {
               setState(() {
@@ -220,19 +210,24 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
     formData.forEach((fieldId, value) {
       print("DynamicUrlWebView: key ${fieldId}, value: $value");
       jsBuffer.writeln(
-        'document.getElementById("$fieldId").value = "$value";',
+        'var field = document.getElementById("$fieldId");' +
+            'if (field) document.getElementById("$fieldId").value = "$value";',
       );
       jsBuffer.writeln(
-        'document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
+        'var field = document.getElementById("$fieldId");' +
+            'if (field) document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
       );
       jsBuffer.writeln(
-        'document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
+        'var field = document.getElementById("$fieldId");' +
+            'if (field) document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
       );
       jsBuffer.writeln(
-        'document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
+        'var field = document.getElementById("$fieldId");' +
+            'if (field) document.getElementById("$fieldId").dispatchEvent(new Event(\'input\'));',
       );
       jsBuffer.writeln(
-        'document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
+        'var field = document.getElementById("$fieldId");' +
+            'if (field) document.getElementById("$fieldId").dispatchEvent(new Event(\'change\'));',
       );
     });
     jsBuffer.writeln('setTimeout(function () {');
@@ -250,25 +245,30 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
         children: [
           // Hidden WebView (Running in background using Opacity)
           SizedBox.shrink(
-            child: IgnorePointer(
+            child:
+            IgnorePointer(
               ignoring: true, // Prevents user interaction
-              child: PreferenceManager.getRestrictSignupFlagged() == "False"
+              child: !isSignupEnable
                   ? WebViewWidget(controller: _controller)
                   : Container(),
             ),
           ),
+
           Center(
-            child: _videoController.value.isInitialized
+            child: _isVideoCompleted ? CircularProgressIndicator() : _videoController.value.isInitialized
                 ? AspectRatio(
                     aspectRatio: _videoController.value.aspectRatio,
                     child: VideoPlayer(_videoController),
                   )
                 : CircularProgressIndicator(), // Show loading until video initializes
           ),
-          Opacity(
-            opacity: _showAfterVideoLoader ? 0 : 1,
-            child: CircularProgressIndicator(),
-          )
+/*
+          IgnorePointer(
+            ignoring: true, // Prevents user interaction
+            child: isSignupEnable
+                ? WebViewWidget(controller: _controller)
+                : Container(),
+          ),*/
 
           // Show "Next" button only when the video completes
           // if (_isVideoCompleted)

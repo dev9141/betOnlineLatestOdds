@@ -88,6 +88,7 @@ class ConfigurationData {
 		guestUser = json["guest_user"]??"false";
 		restrict_signup = json["restrict_signup"]??"false";
 		organizationFlag = json["organizationFlag"]??"true";
+		restrict_signup = json["restrict_signup"]??"false";
 		privacyPolicyUrl =  json["PRIVACY_POLICY"];
 		tncUrl =  json["TERM_CONDITIONS"];
 		supportUrl =  json["SUPPORT"];
@@ -102,6 +103,7 @@ class ConfigurationData {
 		"guest_user": guestUser??"false",
 		"restrict_signup": restrict_signup??"false",
 		"organizationFlag": organizationFlag??"true",
+		"restrict_signup": restrict_signup??"false",
 		"ELEMENTS": List<dynamic>.from(elements.map((x) => x)),
 		"INJECT_JS_ON_START": List<dynamic>.from(injectJsOnStart.map((x) => x)),
 		"INJECT_JS_ON_PROGRESS": List<dynamic>.from(injectJsOnProgress.map((x) => x)),
