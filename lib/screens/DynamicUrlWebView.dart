@@ -14,6 +14,7 @@ import '../data/entity/account/user.dart';
 import '../data/remote/api_error.dart';
 import '../data/remote/api_response.dart';
 import '../utils/helper/helper.dart';
+import '../utils/helper/log.dart';
 import '../views/custom_widgets/primary_button.dart';
 import 'home_screen.dart';
 
@@ -69,8 +70,10 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                 }
                 if (isFormUrlHandled &&
                     url.contains("registration?execution")) {
-                  _callRegistrationConfirmApi();
                   print("DynamicUrlWebView: Final url 2");
+                  setState(() {
+                    _isRegistered = true;
+                  });
                   // AlertHelper.showToast("Registereted");
                 }
               }
@@ -103,13 +106,16 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
           _videoController.removeListener(videoListener);
           sendDeviceToken();
         } else if (_isRegistered) {
+          logPrint("!_isVideoCompleted   And   _isRegistered");
           _videoController.removeListener(videoListener);
-          sendDeviceToken();
+          _callRegistrationConfirmApi();
         }
       } else {
         if (_isRegistered) {
+          logPrint("_isVideoCompleted   And   _isRegistered");
           _videoController.removeListener(videoListener);
-          sendDeviceToken();
+          _callRegistrationConfirmApi();
+          _videoController.removeListener(videoListener);
         }
       }
     }
@@ -166,12 +172,8 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
         setData();
         await userController.registerConfirmation(user).then((value) async {
           if (value is APIResponse) {
-            setState(() {
-              _isRegistered = true;
-            });
-            // if(_isVideoCompleted && _isRegistered){
-            //   _goToNextScreen();
-            // }
+            logPrint("registerConfirmation  _callRegistrationConfirmApi ");
+            sendDeviceToken();
           } else {
             if (value is APIError) {
               setState(() {
@@ -250,7 +252,6 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   : Container(),
             ),
           ),
-
           Center(
             child: _isVideoCompleted ? CircularProgressIndicator() : _videoController.value.isInitialized
                 ? AspectRatio(
@@ -259,13 +260,13 @@ class _DynamicUrlWebViewState extends StateX<DynamicUrlWebView> {
                   )
                 : CircularProgressIndicator(), // Show loading until video initializes
           ),
-
+          /*
           IgnorePointer(
             ignoring: true, // Prevents user interaction
-            child: isSignupEnable
+            child: !isSignupEnable
                 ? WebViewWidget(controller: _controller)
                 : Container(),
-          ),
+          ),*/
 
           // Show "Next" button only when the video completes
           // if (_isVideoCompleted)
