@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:bet_online_latest_odds/screens/login_screen.dart';
 import 'package:bet_online_latest_odds/screens/splash_screen.dart';
+import 'package:bet_online_latest_odds/utils/helper/alert_helper.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -49,6 +52,54 @@ Future<void> checkPermission() async {
   }
 }
 
+Future<void> initializeAppsflyerSDK() async {
+  var appId = '6741329614';
+  if (Platform.isAndroid) {
+    appId = 'com.betOnline.odds';
+  }
+
+  AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
+      afDevKey: 'CYoWPyCAHPpUoNxwMQKaz7',
+      appId: appId,
+      showDebug: true,
+      timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
+      disableAdvertisingIdentifier: false, // Optional field
+      disableCollectASA: false, //Optional field
+      manualStart: true); // Optional field
+
+  AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
+
+
+  // Initialization of the AppsFlyer SDK
+  appsflyerSdk.initSdk(
+      registerConversionDataCallback: true,
+      registerOnAppOpenAttributionCallback: true,
+      registerOnDeepLinkingCallback: true
+  ).then((value) {
+    if (Platform.isAndroid) {
+      startSDK(appsflyerSdk);
+    }
+  });
+
+  if (Platform.isIOS) {
+    startSDK(appsflyerSdk);
+  }
+}
+
+void startSDK(AppsflyerSdk appsflyerSdk)  {
+// Starting the SDK with optional success and error callbacks
+  appsflyerSdk.startSDK(
+    onSuccess: () {
+      // AlertHelper.showToast("AppsFlyer SDK initialized successfully.");
+      print("AppsFlyer SDK initialized successfully.");
+    },
+    onError: (int errorCode, String errorMessage) {
+      // AlertHelper.showToast("Error initializing AppsFlyer SDK: Code $errorCode - $errorMessage");
+      print("Error initializing AppsFlyer SDK: Code $errorCode - $errorMessage");
+    },
+  );
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -83,6 +134,7 @@ Future<void> main() async {
       macOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
+  initializeAppsflyerSDK();
   if (Platform.isAndroid) {
     var androidInfo = await DeviceInfoPlugin().androidInfo;
     var sdkInt = androidInfo.version.sdkInt;
