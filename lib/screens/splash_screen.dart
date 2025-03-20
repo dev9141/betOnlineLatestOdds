@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(height: 8), // Space between texts
                 // LATEST ODDS text
                 Text(
-                  "LATEST ODDS",
+                  "ODDS",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
