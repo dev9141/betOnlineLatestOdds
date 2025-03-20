@@ -649,7 +649,8 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                                                   //     context, value.message,
                                                   //     false);
                                                   _fetchConfigurationData();
-                                                } else {
+                                                }
+                                                else {
                                                   if (value is APIError) {
                                                     setState(() {
                                                       _isLoading = false;
@@ -947,13 +948,24 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
             'LastName': _lastNameController
                 .text.trim(),
           };
-          Navigator.pushReplacement(
+
+          var isSignupEnable = PreferenceManager.getRestrictSignupFlag();
+          if (!isSignupEnable) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DynamicUrlWebView(
+                    formData: formData,
+                  ),
+                ));
+          } else {
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    DynamicUrlWebView(
-                      formData: formData,),
-              ));
+                builder: (context) => HomeScreen(),
+              ),
+            );
+          }
           //_configurationEntity!.data.webviewUrl = "https://www.bet_online_latest_odds.com.pa/nba/";
           print("Config Response: ${_configurationEntity!.data.toJson()}");
         } else {
