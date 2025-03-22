@@ -6,6 +6,8 @@ import 'package:state_extended/state_extended.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../assets/app_colors.dart';
+
 class WebViewWithJsInjection extends StatefulWidget {
   final String url;
   final Map<String, dynamic> configuration;
@@ -59,6 +61,7 @@ class _WebViewWithJsInjectionState extends StateX<WebViewWithJsInjection> {
 
   void _initWebView() {
     _controller = WebViewController()
+      ..setBackgroundColor(AppColors.background)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
