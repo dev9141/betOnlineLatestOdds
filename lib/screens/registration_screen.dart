@@ -949,8 +949,12 @@ class _RegistrationScreenState extends StateX<RegistrationScreen> {
                 .text.trim(),
           };
 
-          var isSignupEnable = PreferenceManager.getRestrictSignupFlag();
-          if (!isSignupEnable) {
+          var RestrictSignupFlag = PreferenceManager.getRestrictSignupFlag();
+          var OrgRestrictionFlag = PreferenceManager.getOrgRestrictionFlagged();
+
+          var isSignupEnable = !(RestrictSignupFlag || OrgRestrictionFlag);
+
+          if (isSignupEnable) {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

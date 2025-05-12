@@ -58,7 +58,6 @@ class ConfigurationData {
 	Style style = Style();
 	String? guestUser = "false";
 	String? restrict_signup = "false";
-	String? organizationFlag = "true";
 	List<String> elements = List.empty();
 	List<String> injectJsOnStart = List.empty();
 	List<String> injectJsOnProgress = List.empty();
@@ -87,7 +86,6 @@ class ConfigurationData {
 		injectJsOnNavigationStateChange =  List<String>.from(json["INJECT_JS_ON_NAVIGATION_STATE_CHANGE"].map((x) => x));
 		guestUser = json["guest_user"]??"false";
 		restrict_signup = json["restrict_signup"]??"false";
-		organizationFlag = json["organizationFlag"]??"true";
 		restrict_signup = json["restrict_signup"]??"false";
 		privacyPolicyUrl =  json["PRIVACY_POLICY"];
 		tncUrl =  json["TERM_CONDITIONS"];
@@ -102,7 +100,6 @@ class ConfigurationData {
 		"STYLE": style.toJson(),
 		"guest_user": guestUser??"false",
 		"restrict_signup": restrict_signup??"false",
-		"organizationFlag": organizationFlag??"true",
 		"restrict_signup": restrict_signup??"false",
 		"ELEMENTS": List<dynamic>.from(elements.map((x) => x)),
 		"INJECT_JS_ON_START": List<dynamic>.from(injectJsOnStart.map((x) => x)),
