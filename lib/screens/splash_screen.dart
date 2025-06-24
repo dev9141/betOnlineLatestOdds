@@ -56,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
           // Centered content
+            /*
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -78,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ],
             ),
-          ),
+          ),*/
         ],
       ),
     );
